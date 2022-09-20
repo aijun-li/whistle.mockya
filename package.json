@@ -1,0 +1,46 @@
+{
+  "name": "whistle.mockya",
+  "version": "0.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky install",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "pnpm -r --parallel run build",
+    "dev": "pnpm -r --parallel run dev",
+    "dev:fe": "pnpm -F ./fe run dev",
+    "dev:be": "pnpm -F ./be run dev"
+  },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=7"
+  },
+  "publishConfig": {
+    "directory": "be",
+    "linkDirectory": true
+  },
+  "keywords": [],
+  "author": "",
+  "devDependencies": {
+    "@changesets/cli": "^2.24.4",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue,json,css,scss}": [
+      "prettier -w"
+    ],
+    "*.{js,ts,vue}": [
+      "eslint --fix"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
+}

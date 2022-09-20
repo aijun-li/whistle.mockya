@@ -1,0 +1,10 @@
+{
+  "env": {
+    "node": true
+  },
+  "extends": ["../.eslintrc.json"],
+  "overrides": [],
+  "plugins": [],
+  "rules": {},
+  "ignorePatterns": ["public/*", "index.js"]
+}
