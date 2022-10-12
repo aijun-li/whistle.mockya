@@ -2,7 +2,11 @@
   <nav class="w-fit h-screen flex flex-col justify-between bg-base-200">
     <Menu>
       <MenuItem icon><Add /></MenuItem>
-      <MenuItem icon><SaveOne /></MenuItem>
+      <MenuItem icon>
+        <Indicator :size="Size.xs">
+          <SaveOne />
+        </Indicator>
+      </MenuItem>
       <MenuItem icon><Lightning /></MenuItem>
     </Menu>
     <Menu>
@@ -17,7 +21,9 @@
 <script lang="ts" setup>
 import { useTheme } from '@/hooks';
 import { ColorTheme } from '@/typings';
+import { Size } from '@/typings/component';
 import { Add, Lightning, SaveOne, Setting } from '@icon-park/vue-next';
+import Indicator from './common/Indicator.vue';
 import Menu from './common/Menu.vue';
 import MenuItem from './common/MenuItem.vue';
 import ThemeToggle from './ThemeToggle.vue';

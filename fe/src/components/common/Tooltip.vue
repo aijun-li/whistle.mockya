@@ -5,17 +5,19 @@
 </template>
 
 <script lang="ts" setup>
+import { Position, SemanticColor } from '@/typings/component';
+
 interface Props {
   tip?: string;
-  position?: 'left' | 'right' | 'top' | 'bottom';
-  type?: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error';
+  position?: Position;
+  type?: SemanticColor;
   disabled?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
   tip: '',
-  position: 'top',
-  type: 'primary',
+  position: Position.top,
+  type: SemanticColor.primary,
   disabled: false,
 });
 </script>

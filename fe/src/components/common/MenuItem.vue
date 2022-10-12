@@ -17,6 +17,7 @@
 
 <script lang="ts" setup>
 import InjectionKeys from '@/const/injection';
+import { Position } from '@/typings/component';
 import { computed, inject, WritableComputedRef } from 'vue';
 import Tooltip from './Tooltip.vue';
 
@@ -24,7 +25,7 @@ interface Props {
   name?: string;
   disabled?: boolean;
   icon?: boolean;
-  tipPosition?: 'left' | 'right' | 'top' | 'bottom';
+  tipPosition?: Position;
   tip?: string;
 }
 
@@ -32,7 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
   name: '',
   disabled: false,
   icon: false,
-  tipPosition: 'right',
+  tipPosition: Position.right,
   tip: '',
 });
 
