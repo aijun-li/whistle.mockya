@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <Navbar class="flex-none" />
+    <Sidebar class="flex-none" />
     <div class="flex-1">
       <RouterView></RouterView>
     </div>
@@ -8,5 +8,5 @@
 </template>
 
 <script setup lang="ts">
-import Navbar from '@/components/Navbar.vue';
+import Sidebar from '@/components/Sidebar.vue';
 </script>
