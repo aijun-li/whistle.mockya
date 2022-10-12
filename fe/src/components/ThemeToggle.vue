@@ -1,11 +1,5 @@
 <template>
-  <Swap
-    class="text-3xl"
-    :active="active"
-    rotate
-    @on-click="changeTheme(ColorTheme.light)"
-    @off-click="changeTheme(ColorTheme.dark)"
-  >
+  <Swap :active="active" rotate @on-click="changeTheme(ColorTheme.light)" @off-click="changeTheme(ColorTheme.dark)">
     <template #on>
       <Moon />
     </template>

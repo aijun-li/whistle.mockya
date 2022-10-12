@@ -1,5 +1,6 @@
-import HelloWorld from '@/components/HelloWorld.vue';
+import Dashboard from '@/pages/dashboard/index.vue';
+import { RouteRecordRaw } from 'vue-router';
 
-const routes = [{ path: '/', component: HelloWorld }];
+const routes: RouteRecordRaw[] = [{ path: '/', component: Dashboard }];
 
 export default routes;
