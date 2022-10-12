@@ -6,7 +6,9 @@
       <MenuItem icon><Lightning /></MenuItem>
     </Menu>
     <Menu>
-      <MenuItem icon @click="toggleTheme()"><ThemeToggle trigger="manual" /></MenuItem>
+      <MenuItem :tip="theme === ColorTheme.dark ? '切换亮主题' : '切换暗主题'" icon @click="toggleTheme()">
+        <ThemeToggle trigger="manual" />
+      </MenuItem>
       <MenuItem icon><Setting /></MenuItem>
     </Menu>
   </nav>
@@ -14,10 +16,11 @@
 
 <script lang="ts" setup>
 import { useTheme } from '@/hooks';
+import { ColorTheme } from '@/typings';
 import { Add, Lightning, SaveOne, Setting } from '@icon-park/vue-next';
 import Menu from './common/Menu.vue';
 import MenuItem from './common/MenuItem.vue';
 import ThemeToggle from './ThemeToggle.vue';
 
-const { toggle: toggleTheme } = useTheme();
+const { theme, toggle: toggleTheme } = useTheme();
 </script>
