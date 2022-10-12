@@ -1,6 +1,6 @@
 <template>
   <div class="indicator">
-    <span :class="['indicator-item', 'badge', `badge-${type}`, `badge-${size}`]">
+    <span :class="['indicator-item', 'badge', { [`badge-${color}`]: color }, `badge-${size}`]">
       <slot name="badge" />
     </span>
     <slot />
@@ -11,12 +11,12 @@
 import { SemanticColor, Size } from '@/typings/component';
 
 interface Props {
-  type?: SemanticColor;
+  color?: SemanticColor;
   size?: Size;
 }
 
 withDefaults(defineProps<Props>(), {
-  type: SemanticColor.primary,
+  color: SemanticColor.default,
   size: Size.md,
 });
 </script>

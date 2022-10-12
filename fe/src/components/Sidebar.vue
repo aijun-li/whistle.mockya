@@ -4,7 +4,7 @@
       <MenuItem tip="首页" icon><Home /></MenuItem>
       <MenuItem icon><Add /></MenuItem>
       <MenuItem tip="保存 (⌘ + S)" icon>
-        <Indicator :size="Size.xs" :type="SemanticColor.warning">
+        <Indicator :size="Size.xs" :color="SemanticColor.warning">
           <SaveOne />
         </Indicator>
       </MenuItem>

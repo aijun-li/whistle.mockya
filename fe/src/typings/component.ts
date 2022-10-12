@@ -1,4 +1,5 @@
 export const enum SemanticColor {
+  default = '',
   primary = 'primary',
   secondary = 'secondary',
   accent = 'accent',
