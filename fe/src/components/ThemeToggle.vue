@@ -15,10 +15,21 @@ import { useTheme } from '@/hooks';
 import { ColorTheme } from '@/typings';
 import { Moon, SunOne } from '@icon-park/vue-next';
 
-let theme = $(useTheme());
+interface Props {
+  trigger?: 'click' | 'manual';
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  trigger: 'click',
+});
+
+let { theme, toggle } = $(useTheme());
 const active = $computed(() => theme === ColorTheme.dark);
 
 function changeTheme(nextTheme: ColorTheme) {
-  theme = nextTheme;
+  if (props.trigger === 'manual') {
+    return;
+  }
+  toggle(nextTheme);
 }
 </script>

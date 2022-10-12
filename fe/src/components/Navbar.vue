@@ -6,15 +6,18 @@
       <MenuItem icon><Lightning /></MenuItem>
     </Menu>
     <Menu>
-      <MenuItem icon><ThemeToggle /></MenuItem>
+      <MenuItem icon @click="toggleTheme()"><ThemeToggle trigger="manual" /></MenuItem>
       <MenuItem icon><Setting /></MenuItem>
     </Menu>
   </nav>
 </template>
 
 <script lang="ts" setup>
+import { useTheme } from '@/hooks';
 import { Add, Lightning, SaveOne, Setting } from '@icon-park/vue-next';
 import Menu from './common/Menu.vue';
 import MenuItem from './common/MenuItem.vue';
 import ThemeToggle from './ThemeToggle.vue';
+
+const { toggle: toggleTheme } = useTheme();
 </script>
