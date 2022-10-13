@@ -8,6 +8,8 @@
       { loading: loading },
       { 'btn-link': link },
       { 'btn-outline': outline },
+      { 'btn-square': square },
+      { 'btn-circle': circle },
     ]"
   >
     <slot />
@@ -22,6 +24,8 @@ interface Props {
   size?: Size;
   outline?: boolean;
   link?: boolean;
+  square?: boolean;
+  circle?: boolean;
   loading?: boolean;
   disabled?: boolean;
 }
