@@ -1,4 +1,5 @@
 import presetRemToPx from '@unocss/preset-rem-to-px';
+import transformerVariantGroup from '@unocss/transformer-variant-group';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
 import { presetUno, transformerDirectives } from 'unocss';
@@ -13,7 +14,7 @@ export default defineConfig({
       reactivityTransform: true,
     }),
     unocss({
-      transformers: [transformerDirectives()],
+      transformers: [transformerDirectives(), transformerVariantGroup()],
       presets: [presetUno(), presetRemToPx(), presetDaisy()],
     }),
   ],
