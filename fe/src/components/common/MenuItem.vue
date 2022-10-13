@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
   name: '',
   disabled: false,
   icon: false,
-  tipPosition: Position.right,
+  tipPosition: 'top',
   tip: '',
 });
 

@@ -4,7 +4,7 @@
       <MenuItem tip="首页" icon><Home /></MenuItem>
       <MenuItem icon><Add /></MenuItem>
       <MenuItem tip="保存 (⌘ + S)" icon>
-        <Indicator :size="Size.xs" :color="SemanticColor.warning">
+        <Indicator size="xs" color="warning">
           <SaveOne />
         </Indicator>
       </MenuItem>
@@ -22,7 +22,6 @@
 <script lang="ts" setup>
 import { useTheme } from '@/hooks';
 import { ColorTheme } from '@/typings';
-import { SemanticColor, Size } from '@/typings/component';
 import { Add, Home, Lightning, SaveOne, Setting } from '@icon-park/vue-next';
 import Indicator from './common/Indicator.vue';
 import Menu from './common/Menu.vue';

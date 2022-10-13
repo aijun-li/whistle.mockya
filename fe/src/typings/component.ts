@@ -1,24 +1,5 @@
-export const enum SemanticColor {
-  default = '',
-  primary = 'primary',
-  secondary = 'secondary',
-  accent = 'accent',
-  info = 'info',
-  success = 'success',
-  warning = 'warning',
-  error = 'error',
-}
+export type Color = '' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error';
 
-export const enum Position {
-  left = 'left',
-  right = 'right',
-  top = 'top',
-  bottom = 'bottom',
-}
+export type Position = 'left' | 'right' | 'top' | 'bottom';
 
-export const enum Size {
-  lg = 'lg',
-  md = 'md',
-  sm = 'sm',
-  xs = 'xs',
-}
+export type Size = 'lg' | 'md' | 'sm' | 'xs';

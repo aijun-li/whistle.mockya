@@ -8,15 +8,15 @@
 </template>
 
 <script lang="ts" setup>
-import { SemanticColor, Size } from '@/typings/component';
+import { Color, Size } from '@/typings/component';
 
 interface Props {
-  color?: SemanticColor;
+  color?: Color;
   size?: Size;
 }
 
 withDefaults(defineProps<Props>(), {
-  color: SemanticColor.default,
-  size: Size.md,
+  color: '',
+  size: 'md',
 });
 </script>
