@@ -1,5 +1,5 @@
 <template>
-  <Tooltip :tip="tip" :position="tipPosition">
+  <Tooltip v-if="tip" :tip="tip" :position="tipPosition">
     <li
       :class="{
         'bordered': name && active,
@@ -13,6 +13,19 @@
       </a>
     </li>
   </Tooltip>
+  <li
+    v-else
+    :class="{
+      'bordered': name && active,
+      'disabled': disabled,
+      'text-2xl': icon,
+    }"
+    @click="activeName = name"
+  >
+    <a :class="{ 'p-4': icon }">
+      <slot />
+    </a>
+  </li>
 </template>
 
 <script lang="ts" setup>

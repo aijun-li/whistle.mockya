@@ -10,6 +10,7 @@
       { 'btn-outline': outline },
       { 'btn-square': square },
       { 'btn-circle': circle },
+      { 'btn-ghost': ghost },
     ]"
   >
     <slot />
@@ -26,6 +27,7 @@ interface Props {
   link?: boolean;
   square?: boolean;
   circle?: boolean;
+  ghost?: boolean;
   loading?: boolean;
   disabled?: boolean;
 }
@@ -35,6 +37,9 @@ withDefaults(defineProps<Props>(), {
   size: 'sm',
   outline: false,
   link: false,
+  square: false,
+  circle: false,
+  ghost: false,
   loading: false,
   disabled: false,
 });
