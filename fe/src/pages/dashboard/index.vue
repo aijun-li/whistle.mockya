@@ -1,10 +1,18 @@
 <template>
   <div class="dashboard h-screen flex flex-col">
     <header class="p-4 flex-none flex items-center justify-between">
-      <div class="text-2xl font-semibold">Dashboard</div>
+      <div class="text-2xl font-semibold flex items-center">
+        Mock
+        <Button class="ml-1 text-xl px-1" color="primary" @click="goGitHub">YA</Button>
+      </div>
 
       <div class="ml-4 flex items-center">
-        <Input ref="searchInput" v-model="searchText" class="w-40 md:w-50 lg:w-60" placeholder="Search" />
+        <Input
+          ref="searchInput"
+          v-model="searchText"
+          class="w-40 md:w-50 lg:w-60 xl:w-70 transition-width"
+          placeholder="Search"
+        />
         <Button class="ml-2 min-w-20" color="primary">Create</Button>
       </div>
     </header>
@@ -20,11 +28,9 @@
         <TransitionGroup name="list">
           <CollectionCard
             v-for="collection in filteredCollections"
-            :id="collection.id"
             :key="collection.id"
             class="h-65 md:h-70 lg:h-75"
-            :title="collection.title"
-            :modify-time="collection.modifyTime"
+            :collection="collection"
           />
         </TransitionGroup>
       </div>
@@ -37,8 +43,10 @@ import CollectionCard from '@/components/CollectionCard.vue';
 import Button from '@/components/common/Button.vue';
 import Input from '@/components/common/Input.vue';
 import { useFilteredArray, useShortcut } from '@/hooks';
+import { useCollectionStore } from '@/stores';
 import { Shortcut } from '@/typings/hook';
 import { ElScrollbar } from 'element-plus';
+import { storeToRefs } from 'pinia';
 
 const searchInput = $ref<InstanceType<typeof Input> | null>(null);
 const searchText = $ref('');
@@ -47,15 +55,9 @@ useShortcut(Shortcut.search, () => {
   searchInput?.focus();
 });
 
-const collections = $ref(
-  Array(20)
-    .fill(0)
-    .map((_, index) => ({
-      id: 'default' + ' ' + index,
-      title: 'Default' + ' ' + index,
-      modifyTime: 20,
-    })),
-);
+const store = useCollectionStore();
+const { loading, collections } = $(storeToRefs(store));
+
 const filteredCollections = $(
   useFilteredArray({
     array: $$(collections),
@@ -63,6 +65,10 @@ const filteredCollections = $(
     text: $$(searchText),
   }),
 );
+
+function goGitHub() {
+  window.open('https://github.com/aijun-li/whistle.mockya', '_blank');
+}
 </script>
 
 <style lang="scss" scoped>

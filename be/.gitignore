@@ -62,3 +62,5 @@ typings/
 /.history
 /dist
 .console.log
+
+*.db

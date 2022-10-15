@@ -1,9 +1,9 @@
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import onerror from 'koa-onerror';
+import Router from 'koa-router';
 import serve from 'koa-static';
 import path from 'path';
-import Router from 'koa-router';
 import setupRouter from './router';
 
 const MAX_AGE = 1000 * 60 * 5;

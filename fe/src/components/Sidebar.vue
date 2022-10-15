@@ -1,18 +1,19 @@
 <template>
-  <div class="w-fit h-screen flex flex-col justify-between bg-base-200">
+  <div class="w-fit h-screen flex flex-col justify-between bg-base-200 shadow">
     <Menu>
-      <MenuItem tip="首页" icon>
+      <MenuItem tip="Home" icon>
         <Home />
       </MenuItem>
-      <MenuItem tip="命令面板" icon>
+      <MenuItem tip="Command Palette" icon>
         <DocSearch />
       </MenuItem>
     </Menu>
     <Menu>
-      <MenuItem :tip="theme === ColorTheme.dark ? '切换亮主题' : '切换暗主题'" icon @click="toggleTheme()">
+      <MenuItem tip="Toggle Chinese" icon><English /></MenuItem>
+      <MenuItem :tip="theme === ColorTheme.dark ? 'Toggle Dark' : 'Toggle Light'" icon @click="toggleTheme()">
         <ThemeToggle trigger="manual" />
       </MenuItem>
-      <MenuItem tip="设置" icon>
+      <MenuItem tip="Settings" icon>
         <Setting />
       </MenuItem>
     </Menu>
@@ -22,7 +23,7 @@
 <script lang="ts" setup>
 import { useTheme } from '@/hooks';
 import { ColorTheme } from '@/typings';
-import { DocSearch, Home, Setting } from '@icon-park/vue-next';
+import { DocSearch, English, Home, Setting } from '@icon-park/vue-next';
 import Menu from './common/Menu.vue';
 import MenuItem from './common/MenuItem.vue';
 import ThemeToggle from './ThemeToggle.vue';
