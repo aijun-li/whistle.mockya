@@ -21,3 +21,12 @@ withDefaults(defineProps<Props>(), {
   disabled: false,
 });
 </script>
+
+<style lang="scss">
+.tooltip {
+  &::before,
+  &::after {
+    @apply z-1;
+  }
+}
+</style>

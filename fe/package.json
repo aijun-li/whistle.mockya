@@ -17,6 +17,8 @@
     "@icon-park/vue-next": "^1.4.2",
     "@unocss/reset": "^0.45.22",
     "@vueuse/core": "^9.2.0",
+    "copy-to-clipboard": "^3.3.2",
+    "element-plus": "^2.2.18",
     "pinia": "^2.0.22",
     "vue": "^3.2.37",
     "vue-router": "4"
@@ -26,7 +28,6 @@
     "@typescript-eslint/eslint-plugin": "^5.38.0",
     "@typescript-eslint/parser": "^5.38.0",
     "@unocss/preset-rem-to-px": "^0.45.22",
-    "@unocss/transformer-variant-group": "^0.45.29",
     "@vitejs/plugin-vue": "^3.1.0",
     "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",
@@ -35,6 +36,7 @@
     "typescript": "^4.6.4",
     "unocss": "^0.45.22",
     "unocss-preset-daisy": "^1.2.0",
+    "unplugin-element-plus": "^0.4.1",
     "vite": "^3.1.0",
     "vue-tsc": "^0.40.4"
   }

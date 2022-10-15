@@ -1,14 +1,21 @@
 <template>
-  <Card class="hover:border-primary transition duration-200" compact bordered>
+  <Card
+    class="collection-card hover:border-primary active:border-primary-focus transition duration-200"
+    compact
+    bordered
+  >
     <div class="h-full flex flex-col">
       <div class="flex-none flex justify-between items-center">
-        <div class="bg-base-300 w-70% px-4 rounded-r-2 transform -translate-x-4 truncate font-medium py-2px">
+        <div
+          class="collection-id transition duration-200 bg-base-300 w-70% px-4 rounded-r-2 transform -translate-x-4 truncate font-medium cursor-pointer py-2px"
+          @click.stop="copy(id)"
+        >
           # {{ id }}
         </div>
 
         <Dropdown end>
           <template #reference>
-            <Button class="hover:bg-base-300" square ghost>
+            <Button class="hover:bg-base-300" square ghost @click.stop>
               <More class="text-xl" />
             </Button>
           </template>
@@ -33,6 +40,7 @@
 
 <script lang="ts" setup>
 import { More, Time } from '@icon-park/vue-next';
+import copy from 'copy-to-clipboard';
 import Button from './common/Button.vue';
 import Card from './common/Card.vue';
 import Dropdown from './common/Dropdown.vue';
@@ -45,9 +53,25 @@ interface Props {
   modifyTime: number;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 function testClick() {
   console.log('click');
 }
 </script>
+
+<style lang="scss">
+.collection-card {
+  &:hover {
+    .collection-id {
+      @apply bg-primary text-primary-content;
+    }
+  }
+
+  &:active {
+    .collection-id {
+      @apply bg-primary-focus;
+    }
+  }
+}
+</style>

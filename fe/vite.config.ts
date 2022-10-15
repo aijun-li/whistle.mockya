@@ -1,10 +1,10 @@
 import presetRemToPx from '@unocss/preset-rem-to-px';
-import transformerVariantGroup from '@unocss/transformer-variant-group';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
-import { presetUno, transformerDirectives } from 'unocss';
+import { presetAttributify, presetUno, transformerDirectives, transformerVariantGroup } from 'unocss';
 import presetDaisy from 'unocss-preset-daisy';
 import unocss from 'unocss/vite';
+import ElementPlus from 'unplugin-element-plus/vite';
 import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
@@ -15,8 +15,9 @@ export default defineConfig({
     }),
     unocss({
       transformers: [transformerDirectives(), transformerVariantGroup()],
-      presets: [presetUno(), presetRemToPx(), presetDaisy()],
+      presets: [presetUno(), presetAttributify({ prefix: 'un:', prefixedOnly: true }), presetRemToPx(), presetDaisy()],
     }),
+    ElementPlus(),
   ],
   build: {
     outDir: path.resolve(__dirname, '../be/public'),
