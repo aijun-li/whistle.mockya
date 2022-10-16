@@ -1,5 +1,11 @@
 # whistle.mockya
 
+## 0.0.1-alpha.2
+
+### Patch Changes
+
+- [fix] modify prepare script
+
 ## 0.0.1-alpha.1
 
 ### Patch Changes
