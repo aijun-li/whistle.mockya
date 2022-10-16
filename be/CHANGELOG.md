@@ -1,5 +1,11 @@
 # whistle.mockya
 
+## 0.0.1-alpha.3
+
+### Patch Changes
+
+- [fix] change npm script
+
 ## 0.0.1-alpha.2
 
 ### Patch Changes
