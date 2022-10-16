@@ -1,32 +1,38 @@
 import { deleteCollection, getCollection, upsertCollection } from '@/database';
 import { UpsertCollectionParams } from '@shared/typings';
-import { ParameterizedContext } from 'koa';
 import Router from 'koa-router';
 
 const collection = new Router();
 
-async function upsertCollectionRoute(ctx: ParameterizedContext<any, Router.IRouterParamContext<any, {}>, any>) {
+async function upsertCollectionRoute(params: UpsertCollectionParams) {
   try {
-    const { id, title } = ctx.request.body as unknown as UpsertCollectionParams;
+    const { id, title } = params;
     const res = await upsertCollection({ id, title });
 
-    ctx.body = {
+    return {
       code: 0,
       msg: '',
       data: res,
     };
   } catch (error) {
     console.error(error);
-    ctx.body = {
+    return {
       code: -1,
       msg: error.message.split('\n').pop(),
     };
   }
 }
 
-collection.post('/', upsertCollectionRoute);
+collection.post('/', async (ctx) => {
+  ctx.body = await upsertCollectionRoute(ctx.request.body as unknown as UpsertCollectionParams);
+});
 
-collection.put('/', upsertCollectionRoute);
+collection.put('/:id', async (ctx) => {
+  ctx.body = await upsertCollectionRoute({
+    ...ctx.request.body,
+    id: ctx.params.id,
+  } as unknown as UpsertCollectionParams);
+});
 
 collection.get('/', async (ctx) => {
   try {

@@ -1,8 +1,9 @@
 {
   "name": "whistle.mockya",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "",
   "scripts": {
+    "prepare": "DATABASE_URL=\"file:./mockya.db\" npx prisma migrate deploy",
     "preinstall": "npx only-allow pnpm",
     "build": "tsc && tsc-alias",
     "dev:ts": "tsc -w",
@@ -24,6 +25,7 @@
     "@types/koa-bodyparser": "^4.3.5",
     "@types/koa-router": "^7.4.4",
     "@types/koa-static": "^4.0.2",
+    "@types/koa__cors": "^3.3.0",
     "@typescript-eslint/eslint-plugin": "^5.38.0",
     "@typescript-eslint/parser": "^5.38.0",
     "eslint": "^8.23.1",
@@ -36,6 +38,7 @@
     "typescript": "^4.6.2"
   },
   "dependencies": {
+    "@koa/cors": "^4.0.0",
     "@shared": "workspace:shared@*",
     "@types/node": "^18.7.18",
     "koa": "^2.7.0",

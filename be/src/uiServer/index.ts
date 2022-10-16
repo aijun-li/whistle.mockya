@@ -1,3 +1,4 @@
+import cors from '@koa/cors';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import onerror from 'koa-onerror';
@@ -15,6 +16,7 @@ export default (server: Whistle.PluginServer, options: Whistle.PluginOptions) =>
   onerror(app);
   const router = new Router();
   setupRouter(router);
+  app.use(cors());
   app.use(bodyParser());
   app.use(router.routes());
   app.use(router.allowedMethods());

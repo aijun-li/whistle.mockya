@@ -13,28 +13,47 @@
           class="w-40 md:w-50 lg:w-60 xl:w-70 transition-width"
           placeholder="Search"
         />
-        <Button class="ml-2 min-w-20" color="primary">Create</Button>
+        <Button class="ml-2 min-w-20" color="primary" @click="createVisible = true">Create</Button>
       </div>
     </header>
 
-    <ElScrollbar class="flex-1" wrap-class="p-4 pt-0">
-      <div
-        class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-        un:md="grid-cols-3"
-        un:lg="grid-cols-4"
-        un:xl="grid-cols-5"
-        un:2xl="grid-cols-6"
-      >
-        <TransitionGroup name="list">
-          <CollectionCard
-            v-for="collection in filteredCollections"
-            :key="collection.id"
-            class="h-65 md:h-70 lg:h-75"
-            :collection="collection"
-          />
-        </TransitionGroup>
-      </div>
-    </ElScrollbar>
+    <div class="flex-1 flex items-center justify-center">
+      <Transition>
+        <Progress v-if="loading" color="primary" />
+
+        <Hero v-else-if="!collections.length">
+          <h1>No Collections Found</h1>
+          <p class="py-4">Please refresh page or create new collection</p>
+        </Hero>
+
+        <Hero v-else-if="!filteredCollections.length">
+          <h1>No Matching Collection</h1>
+          <p class="py-4">Try to change your search keyword</p>
+        </Hero>
+
+        <ElScrollbar v-else class="flex-1" wrap-class="p-4 pt-0">
+          <div
+            class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+            un:md="grid-cols-3"
+            un:lg="grid-cols-4"
+            un:xl="grid-cols-5"
+            un:2xl="grid-cols-6"
+          >
+            <TransitionGroup name="list">
+              <CollectionCard
+                v-for="collection in filteredCollections"
+                :key="collection.id"
+                class="h-65 md:h-70 lg:h-75"
+                :collection="collection"
+                @refetch="fetchCollections"
+              />
+            </TransitionGroup>
+          </div>
+        </ElScrollbar>
+      </Transition>
+    </div>
+
+    <CreateCollectionModal v-model="createVisible" @refetch="fetchCollections" />
   </div>
 </template>
 
@@ -45,18 +64,19 @@ import Input from '@/components/common/Input.vue';
 import { useFilteredArray, useShortcut } from '@/hooks';
 import { useCollectionStore } from '@/stores';
 import { Shortcut } from '@/typings/hook';
+
+import Hero from '@/components/common/Hero.vue';
+import Progress from '@/components/common/Progress.vue';
+import CreateCollectionModal from '@/components/CreateCollectionModal.vue';
 import { ElScrollbar } from 'element-plus';
 import { storeToRefs } from 'pinia';
 
 const searchInput = $ref<InstanceType<typeof Input> | null>(null);
 const searchText = $ref('');
 
-useShortcut(Shortcut.search, () => {
-  searchInput?.focus();
-});
-
 const store = useCollectionStore();
 const { loading, collections } = $(storeToRefs(store));
+const { fetchCollections } = store;
 
 const filteredCollections = $(
   useFilteredArray({
@@ -69,6 +89,15 @@ const filteredCollections = $(
 function goGitHub() {
   window.open('https://github.com/aijun-li/whistle.mockya', '_blank');
 }
+
+const createVisible = $ref(false);
+
+useShortcut(Shortcut.search, () => {
+  if (createVisible) {
+    return;
+  }
+  searchInput?.focus();
+});
 </script>
 
 <style lang="scss" scoped>

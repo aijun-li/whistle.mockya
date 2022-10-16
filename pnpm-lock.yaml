@@ -19,12 +19,14 @@ importers:
 
   be:
     specifiers:
+      '@koa/cors': ^4.0.0
       '@prisma/client': ^4.4.0
       '@shared': workspace:shared@*
       '@types/koa': ^2.13.4
       '@types/koa-bodyparser': ^4.3.5
       '@types/koa-router': ^7.4.4
       '@types/koa-static': ^4.0.2
+      '@types/koa__cors': ^3.3.0
       '@types/node': ^18.7.18
       '@typescript-eslint/eslint-plugin': ^5.38.0
       '@typescript-eslint/parser': ^5.38.0
@@ -42,6 +44,7 @@ importers:
       tsc-alias: ^1.7.0
       typescript: ^4.6.2
     dependencies:
+      '@koa/cors': 4.0.0
       '@shared': link:../shared
       '@types/node': 18.7.18
       koa: 2.13.4
@@ -55,6 +58,7 @@ importers:
       '@types/koa-bodyparser': 4.3.8
       '@types/koa-router': 7.4.4
       '@types/koa-static': 4.0.2
+      '@types/koa__cors': 3.3.0
       '@typescript-eslint/eslint-plugin': 5.38.0_wsb62dxj2oqwgas4kadjymcmry
       '@typescript-eslint/parser': 5.38.0_irgkl5vooow2ydyo6aokmferha
       eslint: 8.23.1
@@ -689,6 +693,13 @@ packages:
     resolution: {integrity: sha512-oXlOmhW2DYuLUAkm/QGaCKoUmGDpCoxHYk5N3AxBvCY0Ec7PikgRg7QZ8LKzofW7h0XJtlA5mFVVzd5Rz5m5uQ==}
     dev: true
 
+  /@koa/cors/4.0.0:
+    resolution: {integrity: sha512-Y4RrbvGTlAaa04DBoPBWJqDR5gPj32OOz827ULXfgB1F7piD1MB/zwn8JR2LAnvdILhxUbXbkXGWuNVsFuVFCQ==}
+    engines: {node: '>= 14.0.0'}
+    dependencies:
+      vary: 1.1.2
+    dev: false
+
   /@manypkg/find-root/1.1.0:
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
     dependencies:
@@ -898,6 +909,12 @@ packages:
       '@types/keygrip': 1.0.2
       '@types/koa-compose': 3.2.5
       '@types/node': 18.7.18
+    dev: true
+
+  /@types/koa__cors/3.3.0:
+    resolution: {integrity: sha512-FUN8YxcBakIs+walVe3+HcNP+Bxd0SB8BJHBWkglZ5C1XQWljlKcEFDG/dPiCIqwVCUbc5X0nYDlH62uEhdHMA==}
+    dependencies:
+      '@types/koa': 2.13.5
     dev: true
 
   /@types/lodash-es/4.17.6:

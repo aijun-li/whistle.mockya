@@ -18,11 +18,16 @@ export const useCollectionStore = defineStore('collections', () => {
     }
   }
 
+  function checkIfIdExists(id: string) {
+    return collections.some((collection) => collection.id === id);
+  }
+
   fetchCollections();
 
   return $$({
     loading,
     collections,
     fetchCollections,
+    checkIfIdExists,
   });
 });

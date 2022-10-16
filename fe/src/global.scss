@@ -1,0 +1,10 @@
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.2s ease;
+  position: absolute;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}

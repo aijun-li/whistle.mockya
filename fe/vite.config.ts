@@ -1,7 +1,7 @@
 import presetRemToPx from '@unocss/preset-rem-to-px';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
-import { presetAttributify, presetUno, transformerDirectives, transformerVariantGroup } from 'unocss';
+import { presetAttributify, presetTypography, presetUno, transformerDirectives, transformerVariantGroup } from 'unocss';
 import presetDaisy from 'unocss-preset-daisy';
 import unocss from 'unocss/vite';
 import ElementPlus from 'unplugin-element-plus/vite';
@@ -15,7 +15,13 @@ export default defineConfig({
     }),
     unocss({
       transformers: [transformerDirectives(), transformerVariantGroup()],
-      presets: [presetUno(), presetAttributify({ prefix: 'un:', prefixedOnly: true }), presetRemToPx(), presetDaisy()],
+      presets: [
+        presetUno(),
+        presetAttributify({ prefix: 'un:', prefixedOnly: true }),
+        presetTypography(),
+        presetRemToPx(),
+        presetDaisy(),
+      ],
     }),
     ElementPlus(),
   ],
