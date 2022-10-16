@@ -8,11 +8,10 @@ export const useCollectionStore = defineStore('collections', () => {
 
   async function fetchCollections() {
     try {
-      loading = true;
       const data = await getCollection();
       collections = data;
     } catch (error) {
-      // TODO
+      console.error(error);
     } finally {
       loading = false;
     }

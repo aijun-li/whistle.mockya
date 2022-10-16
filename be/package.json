@@ -1,7 +1,7 @@
 {
   "name": "whistle.mockya",
   "version": "0.0.0",
-  "description": "",
+  "description": "A simple whistle-based mock plugin with ui for http/rpc endpoints",
   "scripts": {
     "prepare": "DATABASE_URL=\"file:./mockya.db\" npx prisma migrate deploy",
     "preinstall": "npx only-allow pnpm",
@@ -12,6 +12,15 @@
     "dev:lack": "lack watch",
     "dev": "run-p dev:*"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aijun-li/whistle.mockya"
+  },
+  "keywords": [
+    "whistle",
+    "plugin",
+    "mock"
+  ],
   "engines": {
     "node": ">=16",
     "pnpm": ">=7"

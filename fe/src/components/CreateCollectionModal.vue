@@ -107,7 +107,7 @@ async function onCreate() {
     createLoading = true;
     await createCollection({
       id: params.id.trim(),
-      title: params.id.trim(),
+      title: params.title.trim(),
     });
     emit('update:modelValue', false);
     emit('refetch');
