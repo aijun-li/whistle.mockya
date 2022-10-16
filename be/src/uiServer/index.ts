@@ -1,9 +1,10 @@
+import cors from '@koa/cors';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import onerror from 'koa-onerror';
+import Router from 'koa-router';
 import serve from 'koa-static';
 import path from 'path';
-import Router from 'koa-router';
 import setupRouter from './router';
 
 const MAX_AGE = 1000 * 60 * 5;
@@ -15,6 +16,7 @@ export default (server: Whistle.PluginServer, options: Whistle.PluginOptions) =>
   onerror(app);
   const router = new Router();
   setupRouter(router);
+  app.use(cors());
   app.use(bodyParser());
   app.use(router.routes());
   app.use(router.allowedMethods());
