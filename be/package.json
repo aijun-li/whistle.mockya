@@ -5,7 +5,7 @@
   "scripts": {
     "prepare": "DATABASE_URL=\"file:./mockya.db\" npx prisma migrate deploy",
     "preinstall": "npx only-allow pnpm",
-    "build": "tsc && tsc-alias",
+    "build": "tsc -b && tsc-alias",
     "dev:ts": "tsc -w",
     "dev:ts-alias": "tsc-alias -w",
     "dev:whistle": "w2 stop && w2 run",
@@ -48,7 +48,6 @@
   },
   "dependencies": {
     "@koa/cors": "^4.0.0",
-    "@shared": "workspace:shared@*",
     "@types/node": "^18.7.18",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",

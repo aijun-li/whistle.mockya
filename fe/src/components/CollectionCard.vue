@@ -56,10 +56,10 @@
 import { useDoubleConfirm } from '@/hooks';
 import { deleteCollection, updateCollection } from '@/services';
 import { More, Time } from '@icon-park/vue-next';
-import { Collection } from '@shared/typings';
 import copy from 'copy-to-clipboard';
 import dayjs from 'dayjs';
 import { nextTick } from 'vue';
+import { Collection } from '~/typings';
 import Button from './common/Button.vue';
 import Card from './common/Card.vue';
 import Dropdown from './common/Dropdown.vue';

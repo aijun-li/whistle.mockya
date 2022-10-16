@@ -1,4 +1,4 @@
-import { Collection, UpsertCollectionParams } from '@shared/typings';
+import { Collection, UpsertCollectionParams } from '~/typings';
 
 const prefix = import.meta.env.DEV ? 'http://localhost:8899/whistle.mockya/api' : '/api';
 

@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { UpsertCollectionParams } from '@shared/typings';
+import { UpsertCollectionParams } from '~/typings';
 
 const prisma = new PrismaClient();
 

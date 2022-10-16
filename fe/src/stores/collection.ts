@@ -1,6 +1,6 @@
 import { getCollection } from '@/services';
-import { Collection } from '@shared/typings';
 import { defineStore } from 'pinia';
+import { Collection } from '~/typings';
 
 export const useCollectionStore = defineStore('collections', () => {
   let loading = $ref(true);

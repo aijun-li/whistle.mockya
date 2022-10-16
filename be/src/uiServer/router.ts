@@ -1,6 +1,6 @@
 import { deleteCollection, getCollection, upsertCollection } from '@/database';
-import { UpsertCollectionParams } from '@shared/typings';
 import Router from 'koa-router';
+import { UpsertCollectionParams } from '~/typings';
 
 const collection = new Router();
 
