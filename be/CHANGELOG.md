@@ -1,5 +1,11 @@
 # whistle.mockya
 
+## 0.0.1-alpha.6
+
+### Patch Changes
+
+- [fix] prisma db env issue
+
 ## 0.0.1-alpha.5
 
 ### Patch Changes
