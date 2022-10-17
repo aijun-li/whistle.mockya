@@ -25,6 +25,7 @@ export default defineConfig({
     }),
     ElementPlus(),
   ],
+  base: '/whistle.mockya/',
   build: {
     outDir: path.resolve(__dirname, '../be/public'),
     emptyOutDir: true,

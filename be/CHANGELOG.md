@@ -1,5 +1,11 @@
 # whistle.mockya
 
+## 0.0.1-alpha.7
+
+### Patch Changes
+
+- [fix] change prisma engine type
+
 ## 0.0.1-alpha.6
 
 ### Patch Changes

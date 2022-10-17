@@ -1,6 +1,6 @@
 import { Collection, UpsertCollectionParams } from '~/typings';
 
-const prefix = import.meta.env.DEV ? 'http://localhost:8899/whistle.mockya/api' : '/api';
+const prefix = import.meta.env.DEV ? 'http://localhost:8899/whistle.mockya/api' : '/whistle.mockya/api';
 
 function e(path: string) {
   return prefix + path;
