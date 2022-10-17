@@ -1,5 +1,11 @@
 # whistle.mockya
 
+## 0.0.1-alpha.8
+
+### Patch Changes
+
+- [fix] rebuild frontend part
+
 ## 0.0.1-alpha.7
 
 ### Patch Changes
