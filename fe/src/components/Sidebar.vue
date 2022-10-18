@@ -9,10 +9,10 @@
       </MenuItem>
     </Menu>
     <Menu>
-      <MenuItem :tip="theme === ColorTheme.dark ? 'Toggle Dark' : 'Toggle Light'" icon @click="toggleTheme()">
+      <MenuItem :tip="themeType === ColorThemeType.dark ? 'Toggle Dark' : 'Toggle Light'" icon @click="toggleTheme()">
         <ThemeToggle trigger="manual" />
       </MenuItem>
-      <MenuItem tip="Settings" icon>
+      <MenuItem tip="Settings" icon @click="goSettings">
         <Setting />
       </MenuItem>
     </Menu>
@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 import { useTheme } from '@/hooks';
-import { ColorTheme } from '@/typings';
+import { ColorThemeType } from '@/typings';
 import { DocSearch, Home, Setting } from '@icon-park/vue-next';
 import { useRouter } from 'vue-router';
 import Menu from './common/Menu.vue';
@@ -29,9 +29,13 @@ import MenuItem from './common/MenuItem.vue';
 import ThemeToggle from './ThemeToggle.vue';
 
 const router = useRouter();
-const { theme, toggle: toggleTheme } = useTheme();
+const { themeType, toggle: toggleTheme } = useTheme();
 
 function goHome() {
   router.push('/');
+}
+
+function goSettings() {
+  router.push('/settings');
 }
 </script>

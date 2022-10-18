@@ -1,5 +1,5 @@
 <template>
-  <Swap :active="active" rotate @on-click="changeTheme(ColorTheme.light)" @off-click="changeTheme(ColorTheme.dark)">
+  <Swap :active="active" rotate @on-click="changeTheme" @off-click="changeTheme">
     <template #on>
       <Moon />
     </template>
@@ -12,7 +12,7 @@
 <script lang="ts" setup>
 import Swap from '@/components/common/Swap.vue';
 import { useTheme } from '@/hooks';
-import { ColorTheme } from '@/typings';
+import { ColorThemeType } from '@/typings';
 import { Moon, SunOne } from '@icon-park/vue-next';
 
 interface Props {
@@ -23,13 +23,13 @@ const props = withDefaults(defineProps<Props>(), {
   trigger: 'click',
 });
 
-let { theme, toggle } = $(useTheme());
-const active = $computed(() => theme === ColorTheme.dark);
+let { themeType, toggle } = $(useTheme());
+const active = $computed(() => themeType === ColorThemeType.dark);
 
-function changeTheme(nextTheme: ColorTheme) {
+function changeTheme() {
   if (props.trigger === 'manual') {
     return;
   }
-  toggle(nextTheme);
+  toggle();
 }
 </script>

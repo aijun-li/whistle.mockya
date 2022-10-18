@@ -1,35 +1,70 @@
-import { ColorTheme, LocalStorageKey } from '@/typings';
+import { DarkColorTheme } from '@/const/theme';
+import { ColorTheme, ColorThemeType, LocalStorageKey } from '@/typings';
 import { useStorage } from '@vueuse/core';
 import { watch } from 'vue';
 
-let theme = $(useStorage(LocalStorageKey.theme, ColorTheme.light));
+let lightTheme = $(useStorage<ColorTheme>(LocalStorageKey.lightTheme, ColorTheme.light));
+let darkTheme = $(useStorage<ColorTheme>(LocalStorageKey.darkTheme, ColorTheme.dark));
+let themeType = $(useStorage<ColorThemeType>(LocalStorageKey.themeType, ColorThemeType.light));
 
 export function useTheme() {
-  watch(
-    () => theme,
-    () => {
-      document.documentElement.dataset.theme = theme;
+  const isLightTheme = $computed(() => themeType === ColorThemeType.light);
+
+  const theme = $computed({
+    get() {
+      return isLightTheme ? lightTheme : darkTheme;
     },
-    {
-      immediate: true,
+    set(nextTheme: ColorTheme) {
+      if (DarkColorTheme.includes(nextTheme)) {
+        themeType = ColorThemeType.dark;
+        darkTheme = nextTheme;
+      } else {
+        themeType = ColorThemeType.light;
+        lightTheme = nextTheme;
+      }
+    },
+  });
+
+  watch(
+    () => lightTheme,
+    () => {
+      console.log('change light', lightTheme);
+      themeType = ColorThemeType.light;
     },
   );
 
-  function toggle(nextTheme?: ColorTheme) {
-    if (nextTheme) {
-      theme = nextTheme;
+  watch(
+    () => darkTheme,
+    () => {
+      themeType = ColorThemeType.dark;
+    },
+  );
+
+  watch(
+    () => themeType,
+    () => {
+      document.documentElement.dataset.theme = themeType === ColorThemeType.light ? lightTheme : darkTheme;
+    },
+  );
+
+  function toggle(type?: ColorThemeType) {
+    if (type) {
+      themeType = type;
       return;
     }
 
-    if (theme === ColorTheme.light) {
-      theme = ColorTheme.dark;
+    if (themeType === ColorThemeType.light) {
+      themeType = ColorThemeType.dark;
     } else {
-      theme = ColorTheme.light;
+      themeType = ColorThemeType.light;
     }
   }
 
   return $$({
     theme,
+    themeType,
+    lightTheme,
+    darkTheme,
     toggle,
   });
 }

@@ -7,6 +7,9 @@ import unocss from 'unocss/vite';
 import ElementPlus from 'unplugin-element-plus/vite';
 import { defineConfig } from 'vite';
 
+const __DEV__ = process.env.NODE_ENV === 'development';
+console.log('isDev', __DEV__);
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -25,7 +28,7 @@ export default defineConfig({
     }),
     ElementPlus(),
   ],
-  base: '/whistle.mockya/',
+  base: __DEV__ ? '/' : '/whistle.mockya/',
   build: {
     outDir: path.resolve(__dirname, '../be/public'),
     emptyOutDir: true,
