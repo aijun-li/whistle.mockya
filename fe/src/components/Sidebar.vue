@@ -20,16 +20,19 @@
 </template>
 
 <script lang="ts" setup>
-import { useTheme } from '@/hooks';
+import { useThemeStore } from '@/stores';
 import { ColorThemeType } from '@/typings';
 import { DocSearch, Home, Setting } from '@icon-park/vue-next';
+import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import Menu from './common/Menu.vue';
 import MenuItem from './common/MenuItem.vue';
 import ThemeToggle from './ThemeToggle.vue';
 
 const router = useRouter();
-const { themeType, toggle: toggleTheme } = useTheme();
+const themeStore = useThemeStore();
+const { themeType } = storeToRefs(themeStore);
+const { toggle: toggleTheme } = themeStore;
 
 function goHome() {
   router.push('/');

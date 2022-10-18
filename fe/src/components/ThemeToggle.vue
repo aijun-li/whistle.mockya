@@ -11,9 +11,10 @@
 
 <script lang="ts" setup>
 import Swap from '@/components/common/Swap.vue';
-import { useTheme } from '@/hooks';
+import { useThemeStore } from '@/stores';
 import { ColorThemeType } from '@/typings';
 import { Moon, SunOne } from '@icon-park/vue-next';
+import { storeToRefs } from 'pinia';
 
 interface Props {
   trigger?: 'click' | 'manual';
@@ -23,7 +24,10 @@ const props = withDefaults(defineProps<Props>(), {
   trigger: 'click',
 });
 
-let { themeType, toggle } = $(useTheme());
+const themeStore = useThemeStore();
+const { themeType } = $(storeToRefs(themeStore));
+const { toggle } = themeStore;
+
 const active = $computed(() => themeType === ColorThemeType.dark);
 
 function changeTheme() {

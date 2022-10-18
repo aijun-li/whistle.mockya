@@ -1,5 +1,5 @@
 <template>
-  <div class="settings h-screen prose px-16 flex flex-col">
+  <div class="settings h-screen prose px-8 flex flex-col">
     <h1 class="flex-none">Settings</h1>
 
     <ElScrollbar class="flex-1">
@@ -28,12 +28,11 @@
 import Option from '@/components/common/Option.vue';
 import Select from '@/components/common/Select.vue';
 import { DarkColorTheme, LightColorTheme } from '@/const/theme';
-import { useTheme } from '@/hooks';
+import { useThemeStore } from '@/stores';
 import { ElScrollbar } from 'element-plus';
+import { storeToRefs } from 'pinia';
 
-const { lightTheme, darkTheme } = useTheme();
-
-console.log();
+const { lightTheme, darkTheme } = storeToRefs(useThemeStore());
 </script>
 
 <style lang="scss" scoped>

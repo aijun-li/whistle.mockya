@@ -1,18 +1,17 @@
 import { DarkColorTheme } from '@/const/theme';
 import { ColorTheme, ColorThemeType, LocalStorageKey } from '@/typings';
 import { useStorage } from '@vueuse/core';
-import { watch } from 'vue';
+import { defineStore } from 'pinia';
+import { watch, watchEffect } from 'vue';
 
-let lightTheme = $(useStorage<ColorTheme>(LocalStorageKey.lightTheme, ColorTheme.light));
-let darkTheme = $(useStorage<ColorTheme>(LocalStorageKey.darkTheme, ColorTheme.dark));
-let themeType = $(useStorage<ColorThemeType>(LocalStorageKey.themeType, ColorThemeType.light));
-
-export function useTheme() {
-  const isLightTheme = $computed(() => themeType === ColorThemeType.light);
+export const useThemeStore = defineStore('theme', () => {
+  let lightTheme = $(useStorage<ColorTheme>(LocalStorageKey.lightTheme, ColorTheme.light));
+  let darkTheme = $(useStorage<ColorTheme>(LocalStorageKey.darkTheme, ColorTheme.dark));
+  let themeType = $(useStorage<ColorThemeType>(LocalStorageKey.themeType, ColorThemeType.light));
 
   const theme = $computed({
     get() {
-      return isLightTheme ? lightTheme : darkTheme;
+      return themeType === ColorThemeType.light ? lightTheme : darkTheme;
     },
     set(nextTheme: ColorTheme) {
       if (DarkColorTheme.includes(nextTheme)) {
@@ -28,7 +27,6 @@ export function useTheme() {
   watch(
     () => lightTheme,
     () => {
-      console.log('change light', lightTheme);
       themeType = ColorThemeType.light;
     },
   );
@@ -40,12 +38,9 @@ export function useTheme() {
     },
   );
 
-  watch(
-    () => themeType,
-    () => {
-      document.documentElement.dataset.theme = themeType === ColorThemeType.light ? lightTheme : darkTheme;
-    },
-  );
+  watchEffect(() => {
+    document.documentElement.dataset.theme = themeType === ColorThemeType.light ? lightTheme : darkTheme;
+  });
 
   function toggle(type?: ColorThemeType) {
     if (type) {
@@ -67,4 +62,4 @@ export function useTheme() {
     darkTheme,
     toggle,
   });
-}
+});
