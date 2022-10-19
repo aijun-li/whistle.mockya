@@ -4,14 +4,17 @@
       'btn',
       { [`btn-${color}`]: color },
       `btn-${size}`,
-      { 'btn-disabled': disabled },
-      { loading: loading },
-      { 'btn-link': link },
-      { 'btn-outline': outline },
-      { 'btn-square': square },
-      { 'btn-circle': circle },
-      { 'btn-ghost': ghost },
+      {
+        'btn-disabled': disabled,
+        'loading': loading,
+        'btn-link': link,
+        'btn-outline': outline,
+        'btn-square': square,
+        'btn-circle': circle,
+        'btn-ghost': ghost,
+      },
     ]"
+    :style="!uppercase ? { '--btn-text-case': 'none' } : undefined"
   >
     <slot />
   </button>
@@ -30,6 +33,7 @@ interface Props {
   ghost?: boolean;
   loading?: boolean;
   disabled?: boolean;
+  uppercase?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -42,5 +46,6 @@ withDefaults(defineProps<Props>(), {
   ghost: false,
   loading: false,
   disabled: false,
+  uppercase: true,
 });
 </script>

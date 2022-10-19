@@ -3,7 +3,7 @@
     <header class="p-4 flex-none flex items-center justify-between">
       <div class="text-2xl font-semibold flex items-center">
         Mock
-        <Button class="ml-1 text-xl px-1" color="primary" @click="goGitHub">YA</Button>
+        <Button class="ml-1 text-xl px-1" color="primary" :uppercase="false" @click="goGitHub">Ya</Button>
       </div>
 
       <div class="ml-4 flex items-center">
