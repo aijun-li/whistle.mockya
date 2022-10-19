@@ -7,11 +7,8 @@ import unocss from 'unocss/vite';
 import ElementPlus from 'unplugin-element-plus/vite';
 import { defineConfig } from 'vite';
 
-const __DEV__ = process.env.NODE_ENV === 'development';
-console.log('isDev', __DEV__);
-
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
     vue({
       reactivityTransform: true,
@@ -28,7 +25,7 @@ export default defineConfig({
     }),
     ElementPlus(),
   ],
-  base: __DEV__ ? '/' : '/whistle.mockya/',
+  base: command === 'serve' ? '/' : '/whistle.mockya/',
   build: {
     outDir: path.resolve(__dirname, '../be/public'),
     emptyOutDir: true,
@@ -38,4 +35,4 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
-});
+}));
