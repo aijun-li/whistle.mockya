@@ -8,7 +8,7 @@
       <div class="flex-none flex justify-between items-center">
         <div
           class="collection-id transition duration-200 bg-base-300 w-70% px-4 rounded-r-2 transform -translate-x-4 truncate font-medium cursor-pointer py-2px select-none"
-          @click.stop="copy(collection.id)"
+          @click.stop="onCopy"
         >
           # {{ collection.id }}
         </div>
@@ -55,6 +55,7 @@
 <script lang="ts" setup>
 import { useDoubleConfirm } from '@/hooks';
 import { deleteCollection, updateCollection } from '@/services';
+import { toast } from '@/utils';
 import { More, Time } from '@icon-park/vue-next';
 import copy from 'copy-to-clipboard';
 import dayjs from 'dayjs';
@@ -75,6 +76,12 @@ const props = defineProps<Props>();
 const emit = defineEmits(['refetch']);
 
 const modifiedTime = $computed(() => dayjs(props.collection.updatedAt).fromNow());
+
+function onCopy() {
+  if (copy(props.collection.id)) {
+    toast.success('Copied');
+  }
+}
 
 let inEdit = $ref(false);
 let newTitle = $ref('');
@@ -108,6 +115,7 @@ async function onDeleteClick() {
   } else {
     try {
       await deleteCollection(props.collection.id);
+      toast.success('Deleted');
       emit('refetch');
     } catch (error) {
       console.error(error);

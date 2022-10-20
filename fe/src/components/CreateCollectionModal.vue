@@ -31,6 +31,7 @@ import Button from '@/components/common/Button.vue';
 import Modal from '@/components/common/Modal.vue';
 import { createCollection } from '@/services';
 import { useCollectionStore } from '@/stores';
+import { toast } from '@/utils';
 import { whenever } from '@vueuse/core';
 import { nextTick, reactive } from 'vue';
 import FormInput from './common/FormInput.vue';
@@ -109,6 +110,9 @@ async function onCreate() {
       id: params.id.trim(),
       title: params.title.trim(),
     });
+
+    toast.success('Created');
+
     emit('update:modelValue', false);
     emit('refetch');
   } catch (error) {
