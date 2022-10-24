@@ -46,6 +46,7 @@
                 class="h-65 md:h-70 lg:h-75"
                 :collection="collection"
                 @refetch="fetchCollections"
+                @click="goDetail(collection.id)"
               />
             </TransitionGroup>
           </div>
@@ -70,9 +71,12 @@ import Progress from '@/components/common/Progress.vue';
 import CreateCollectionModal from '@/components/CreateCollectionModal.vue';
 import { ElScrollbar } from 'element-plus';
 import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
 
 const searchInput = $ref<InstanceType<typeof Input> | null>(null);
 const searchText = $ref('');
+
+const router = useRouter();
 
 const store = useCollectionStore();
 const { loading, collections } = $(storeToRefs(store));
@@ -88,6 +92,10 @@ const filteredCollections = $(
 
 function goGitHub() {
   window.open('https://github.com/aijun-li/whistle.mockya', '_blank');
+}
+
+function goDetail(id: string) {
+  router.push(`/collection/${id}`);
 }
 
 const createVisible = $ref(false);
