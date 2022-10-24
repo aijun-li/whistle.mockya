@@ -21,11 +21,11 @@
           </template>
           <template #default>
             <Menu class="p-2 w-25" rounded>
-              <MenuItem @click="onEditClick">Edit</MenuItem>
+              <MenuItem @click.stop="onEditClick">Edit</MenuItem>
               <MenuItem
                 class="text-error"
                 :class="{ 'delete-option__confirmed': deleteConfirmed }"
-                @click="onDeleteClick"
+                @click.stop="onDeleteClick"
               >
                 {{ deleteConfirmed ? 'Confirm' : 'Delete' }}
               </MenuItem>

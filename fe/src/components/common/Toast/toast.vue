@@ -43,6 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const style = $computed(() => ({
   top: `${props.offset}px`,
+  zIndex: `${props.zIndex}`,
 }));
 
 const Icon = $computed(() => {
