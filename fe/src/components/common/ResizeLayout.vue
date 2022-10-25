@@ -1,6 +1,6 @@
 <template>
   <div ref="container" class="resize-layout flex h-full w-full" :class="{ 'flex-col': vertical }">
-    <div ref="startContainer" class="resize-start-container" :style="startStyle">
+    <div ref="startContainer" class="resize-start-container min-w-0 min-h-0" :style="startStyle">
       <slot name="start" />
     </div>
 
@@ -14,7 +14,7 @@
       un:hover="border-base-300 border-opacity-30"
     ></div>
 
-    <div class="resize-end-container flex-1">
+    <div class="resize-end-container flex-1 min-w-0 min-h-0">
       <slot name="end" />
     </div>
   </div>
@@ -72,7 +72,7 @@ useEventListener(document, 'mousemove', (e) => {
   const fullSize = props.vertical ? fullHeight : fullWidth;
   const diff = props.vertical ? e.movementY : e.movementX;
 
-  const nextStartPixel = fullSize * (startPercent / 100) + diff;
+  const nextStartPixel = Math.min(Math.max(fullSize * (startPercent / 100) + diff, 0), fullSize);
   const nextStartPercent = (nextStartPixel * 100) / fullSize;
   const nextEndPixel = fullSize - nextStartPixel - 2;
   const nextEndPercent = (nextEndPixel * 100) / fullSize;
