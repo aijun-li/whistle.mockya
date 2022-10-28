@@ -7,7 +7,7 @@ import { useThemeStore } from '@/stores';
 import { hslToHex } from '@/utils';
 import { useResizeObserver } from '@vueuse/core';
 import * as monaco from 'monaco-editor';
-import { nextTick, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import './editor';
 
 const { onThemeChange } = useThemeStore();
@@ -23,8 +23,7 @@ monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
 
 onMounted(() => {
   updateThemeColor();
-  onThemeChange(async () => {
-    await nextTick();
+  onThemeChange(() => {
     updateThemeColor();
     monaco.editor.setTheme('mockya');
   });

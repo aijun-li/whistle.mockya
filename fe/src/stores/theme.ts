@@ -40,15 +40,9 @@ export const useThemeStore = defineStore('theme', () => {
     },
   );
 
-  watch(
-    () => theme,
-    () => {
-      themeChangeHook.trigger('theme');
-    },
-  );
-
   watchEffect(() => {
     document.documentElement.dataset.theme = themeType === ColorThemeType.light ? lightTheme : darkTheme;
+    themeChangeHook.trigger(theme);
   });
 
   function toggle(type?: ColorThemeType) {
