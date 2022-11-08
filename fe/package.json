@@ -20,6 +20,7 @@
     "copy-to-clipboard": "^3.3.2",
     "dayjs": "^1.11.5",
     "element-plus": "^2.2.18",
+    "monaco-editor": "^0.34.1",
     "pinia": "^2.0.22",
     "vue": "^3.2.37",
     "vue-router": "4"
