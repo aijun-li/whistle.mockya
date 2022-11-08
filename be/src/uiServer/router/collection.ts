@@ -1,8 +1,8 @@
-import { deleteCollection, getCollection, upsertCollection } from '@/database';
+import { deleteCollection, getCollections, upsertCollection } from '@/database';
 import Router from 'koa-router';
 import { UpsertCollectionParams } from '~/typings';
 
-const collection = new Router();
+const router = new Router();
 
 async function upsertCollectionRoute(params: UpsertCollectionParams) {
   try {
@@ -23,20 +23,20 @@ async function upsertCollectionRoute(params: UpsertCollectionParams) {
   }
 }
 
-collection.post('/', async (ctx) => {
+router.post('/', async (ctx) => {
   ctx.body = await upsertCollectionRoute(ctx.request.body as unknown as UpsertCollectionParams);
 });
 
-collection.put('/:id', async (ctx) => {
+router.put('/:id', async (ctx) => {
   ctx.body = await upsertCollectionRoute({
     ...ctx.request.body,
     id: ctx.params.id,
   } as unknown as UpsertCollectionParams);
 });
 
-collection.get('/', async (ctx) => {
+router.get('/', async (ctx) => {
   try {
-    const data = await getCollection();
+    const data = await getCollections();
 
     ctx.body = {
       code: 0,
@@ -52,7 +52,7 @@ collection.get('/', async (ctx) => {
   }
 });
 
-collection.delete('/:id', async (ctx) => {
+router.delete('/:id', async (ctx) => {
   try {
     const data = await deleteCollection(ctx.params.id);
 
@@ -70,12 +70,4 @@ collection.delete('/:id', async (ctx) => {
   }
 });
 
-// For help see https://github.com/ZijianHe/koa-router#api-reference
-export default (router: Router) => {
-  // router.get('/cgi-bin/init', (ctx) => {
-  //   ctx.body = 'Hello whistle.';
-  // });
-
-  router.prefix('/api');
-  router.use('/collection', collection.routes());
-};
+export default router;

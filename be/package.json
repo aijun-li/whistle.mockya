@@ -30,6 +30,10 @@
   "prisma": {
     "schema": "db/schema.prisma"
   },
+  "whistleConfig": {
+    "hintUrl": "/api/hint",
+    "hideLongProtocol": true
+  },
   "devDependencies": {
     "@types/koa": "^2.13.4",
     "@types/koa-bodyparser": "^4.3.5",

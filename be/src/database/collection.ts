@@ -27,21 +27,20 @@ export async function upsertCollection({ id, title }: UpsertCollectionParams) {
   return data;
 }
 
-export async function getCollection(id?: string) {
-  const data = id
-    ? await prisma.collection.findUnique({
-        where: {
-          id,
-        },
-        select: collectionSelectFields,
-      })
-    : await prisma.collection.findMany({
-        select: {
-          id: true,
-          title: true,
-          updatedAt: true,
-        },
-      });
+export async function getCollections() {
+  const data = await prisma.collection.findMany({
+    select: collectionSelectFields,
+  });
+  return data;
+}
+
+export async function getCollection(id: string) {
+  const data = await prisma.collection.findUnique({
+    where: {
+      id,
+    },
+    select: collectionSelectFields,
+  });
   return data;
 }
 
