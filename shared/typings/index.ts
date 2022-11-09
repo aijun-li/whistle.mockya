@@ -5,3 +5,8 @@ export interface Collection {
   title: string;
   updatedAt: string;
 }
+
+export enum RuleType {
+  http = 'http',
+  rpc = 'rpc',
+}

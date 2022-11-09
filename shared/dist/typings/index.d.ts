@@ -4,3 +4,7 @@ export interface Collection {
     title: string;
     updatedAt: string;
 }
+export declare enum RuleType {
+    http = "http",
+    rpc = "rpc"
+}

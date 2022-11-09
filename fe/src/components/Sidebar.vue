@@ -1,5 +1,5 @@
 <template>
-  <div class="w-fit h-screen flex flex-col justify-between bg-base-200 shadow">
+  <div class="w-fit h-screen flex flex-col justify-between bg-base-200 shadow z-1">
     <Menu>
       <MenuItem tip="Home" icon @click="goHome">
         <Home />
