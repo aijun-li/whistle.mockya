@@ -12,16 +12,20 @@
         'btn-square': square,
         'btn-circle': circle,
         'btn-ghost': ghost,
+        'btn-active': active || groupActivated,
       },
     ]"
     :style="!uppercase ? { '--btn-text-case': 'none' } : undefined"
+    @click="onClick"
   >
     <slot />
   </button>
 </template>
 
 <script lang="ts" setup>
+import InjectionKeys from '@/const/injection';
 import { Color, Size } from '@/typings/component';
+import { inject } from 'vue';
 
 interface Props {
   color?: Color;
@@ -34,9 +38,11 @@ interface Props {
   loading?: boolean;
   disabled?: boolean;
   uppercase?: boolean;
+  active?: boolean;
+  name?: string;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   color: '',
   size: 'sm',
   outline: false,
@@ -47,5 +53,18 @@ withDefaults(defineProps<Props>(), {
   loading: false,
   disabled: false,
   uppercase: true,
+  active: false,
+  name: '',
 });
+
+const groupActiveName = inject(InjectionKeys.buttonGroupActiveName, '');
+const groupActivated = $computed(
+  () => props.name && typeof groupActiveName !== 'string' && groupActiveName.value === props.name,
+);
+
+function onClick() {
+  if (props.name && typeof groupActiveName !== 'string') {
+    groupActiveName.value = props.name;
+  }
+}
 </script>
