@@ -2,7 +2,7 @@
   <Transition name="toast-fade" @before-leave="onClose" @after-leave="onDestroy">
     <div v-show="render" class="toast toast-top toast-center p-2" :style="style">
       <div :class="['alert py-2', { [`alert-${type}`]: type }]">
-        <div class="flex items-center">
+        <div class="flex items-center w-max">
           <Component :is="Icon" />
           {{ text }}
         </div>

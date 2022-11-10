@@ -6,8 +6,27 @@ function e(path: string) {
   return prefix + path;
 }
 
-export async function getCollection(id?: string) {
-  const endpoint = id ? e(`/collection/${id}`) : e('/collection');
+export async function getCollection(id: string) {
+  const endpoint = e(`/collection/${id}`);
+
+  const res = await fetch(endpoint);
+
+  if (!res.ok) {
+    throw new Error('Fetch Error!');
+  }
+
+  const { code, msg, data } = await res.json();
+
+  if (code) {
+    console.error(msg);
+    throw new Error(msg);
+  }
+
+  return data as Collection;
+}
+
+export async function getCollections() {
+  const endpoint = e('/collection');
 
   const res = await fetch(endpoint);
 

@@ -30,7 +30,7 @@
 import Button from '@/components/common/Button.vue';
 import Modal from '@/components/common/Modal.vue';
 import { createCollection } from '@/services';
-import { useCollectionStore } from '@/stores';
+import { useCollectionsStore } from '@/stores';
 import { toast } from '@/utils';
 import { whenever } from '@vueuse/core';
 import { nextTick, reactive } from 'vue';
@@ -43,7 +43,7 @@ interface Props {
 const props = defineProps<Props>();
 const emit = defineEmits(['update:modelValue', 'refetch']);
 
-const { checkIfIdExists } = useCollectionStore();
+const { checkIfIdExists } = useCollectionsStore();
 
 const visible = $computed({
   get() {

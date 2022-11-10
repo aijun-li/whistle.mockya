@@ -63,7 +63,7 @@ import CollectionCard from '@/components/CollectionCard.vue';
 import Button from '@/components/common/Button.vue';
 import Input from '@/components/common/Input.vue';
 import { useFilteredArray, useShortcut } from '@/hooks';
-import { useCollectionStore } from '@/stores';
+import { useCollectionsStore } from '@/stores';
 import { Shortcut } from '@/typings/hook';
 
 import Hero from '@/components/common/Hero.vue';
@@ -78,7 +78,7 @@ const searchText = $ref('');
 
 const router = useRouter();
 
-const store = useCollectionStore();
+const store = useCollectionsStore();
 const { loading, collections } = $(storeToRefs(store));
 const { fetchCollections } = store;
 
@@ -89,6 +89,8 @@ const filteredCollections = $(
     text: $$(searchText),
   }),
 );
+
+fetchCollections();
 
 function goGitHub() {
   window.open('https://github.com/aijun-li/whistle.mockya', '_blank');

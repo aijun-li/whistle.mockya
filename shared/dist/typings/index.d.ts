@@ -6,5 +6,6 @@ export interface Collection {
 }
 export declare enum RuleType {
     http = "http",
-    rpc = "rpc"
+    rpc = "rpc",
+    all = "all"
 }

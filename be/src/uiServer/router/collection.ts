@@ -1,4 +1,4 @@
-import { deleteCollection, getCollections, upsertCollection } from '@/database';
+import { deleteCollection, getCollection, getCollections, upsertCollection } from '@/database';
 import Router from 'koa-router';
 import { UpsertCollectionParams } from '~/typings';
 
@@ -48,6 +48,24 @@ router.get('/', async (ctx) => {
     ctx.body = {
       code: -1,
       msg: error.message.split('\n').pop(),
+    };
+  }
+});
+
+router.get('/:id', async (ctx) => {
+  try {
+    const data = await getCollection(ctx.params.id);
+
+    ctx.body = {
+      code: 0,
+      msg: '',
+      data,
+    };
+  } catch (error) {
+    console.error(error);
+    ctx.body = {
+      code: -1,
+      msg: error.message.splice('\n').pop(),
     };
   }
 });

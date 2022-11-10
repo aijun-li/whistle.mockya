@@ -1,6 +1,6 @@
 <template>
   <div ref="container" class="resize-layout flex h-full w-full" :class="{ 'flex-col': vertical }">
-    <div ref="startContainer" class="resize-start-container min-w-0 min-h-0" :style="startStyle">
+    <div ref="startContainer" class="resize-start-container min-w-0 min-h-0 flex-none" :style="startStyle">
       <slot name="start" />
     </div>
 

@@ -1,32 +1,27 @@
 import { getCollection } from '@/services';
+import { handleError } from '@/utils';
 import { defineStore } from 'pinia';
 import { Collection } from '~/typings';
 
-export const useCollectionStore = defineStore('collections', () => {
+export const useCollectionStore = defineStore('collection', () => {
   let loading = $ref(true);
-  let collections = $ref<Collection[]>([]);
+  let collection = $ref<Collection | null>(null);
 
-  async function fetchCollections() {
+  async function fetchCollection(id: string) {
     try {
-      const data = await getCollection();
-      collections = data;
+      loading = true;
+      const data = await getCollection(id);
+      collection = data;
     } catch (error) {
-      console.error(error);
+      handleError(error);
     } finally {
       loading = false;
     }
   }
 
-  function checkIfIdExists(id: string) {
-    return collections.some((collection) => collection.id === id);
-  }
-
-  fetchCollections();
-
   return $$({
     loading,
-    collections,
-    fetchCollections,
-    checkIfIdExists,
+    collection,
+    fetchCollection,
   });
 });
