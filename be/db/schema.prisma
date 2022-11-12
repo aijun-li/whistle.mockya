@@ -12,8 +12,41 @@ datasource db {
 }
 
 model Collection {
-  id        String   @id
-  title     String
+  id    String @id
+  title String
+
+  rules Rule[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Rule {
+  id       Int     @id @default(autoincrement())
+  type     String
+  pattern  String
+  enabled  Boolean
+  delay    Float
+  activeId Int
+  desc     String?
+
+  data RuleData[]
+
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  collectionId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RuleData {
+  id    Int    @id @default(autoincrement())
+  label String
+  value String
+
+  rule   Rule? @relation(fields: [ruleId], references: [id])
+  ruleId Int?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

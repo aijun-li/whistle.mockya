@@ -1,11 +1,11 @@
 import { getCollections } from '@/services';
 import { handleError } from '@/utils';
 import { defineStore } from 'pinia';
-import { Collection } from '~/typings';
+import { BaseCollection } from '~/typings';
 
 export const useCollectionsStore = defineStore('collections', () => {
   let loading = $ref(true);
-  let collections = $ref<Collection[]>([]);
+  let collections = $ref<BaseCollection[]>([]);
 
   async function fetchCollections() {
     try {

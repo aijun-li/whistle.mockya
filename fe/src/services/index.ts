@@ -1,4 +1,4 @@
-import { Collection, UpsertCollectionParams } from '~/typings';
+import { BaseCollection, Collection, UpsertCollectionParams } from '~/typings';
 
 const prefix = import.meta.env.DEV ? 'http://localhost:8899/whistle.mockya/api' : '/whistle.mockya/api';
 
@@ -41,7 +41,7 @@ export async function getCollections() {
     throw new Error(msg);
   }
 
-  return data as Collection[];
+  return data as BaseCollection[];
 }
 
 export async function createCollection(params: UpsertCollectionParams) {

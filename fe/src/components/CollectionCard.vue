@@ -60,7 +60,7 @@ import { More, Time } from '@icon-park/vue-next';
 import copy from 'copy-to-clipboard';
 import dayjs from 'dayjs';
 import { nextTick } from 'vue';
-import { Collection } from '~/typings';
+import { BaseCollection } from '~/typings';
 import Button from './common/Button.vue';
 import Card from './common/Card.vue';
 import Dropdown from './common/Dropdown.vue';
@@ -69,7 +69,7 @@ import Menu from './common/Menu.vue';
 import MenuItem from './common/MenuItem.vue';
 
 interface Props {
-  collection: Collection;
+  collection: BaseCollection;
 }
 
 const props = defineProps<Props>();

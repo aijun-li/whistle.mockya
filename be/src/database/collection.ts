@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
 import { UpsertCollectionParams } from '~/typings';
-
-const prisma = new PrismaClient();
+import prisma from './prisma';
 
 const collectionSelectFields = {
   id: true,
@@ -34,8 +32,8 @@ export async function getCollections() {
   return data;
 }
 
-export async function getCollection(id: string) {
-  const data = await prisma.collection.findUnique({
+export async function deleteCollection(id: string) {
+  const data = await prisma.collection.delete({
     where: {
       id,
     },
@@ -44,12 +42,18 @@ export async function getCollection(id: string) {
   return data;
 }
 
-export async function deleteCollection(id: string) {
-  const data = await prisma.collection.delete({
+export async function getCollection(id: string) {
+  const data = await prisma.collection.findUniqueOrThrow({
     where: {
       id,
     },
-    select: collectionSelectFields,
+    include: {
+      rules: {
+        include: {
+          data: true,
+        },
+      },
+    },
   });
   return data;
 }
