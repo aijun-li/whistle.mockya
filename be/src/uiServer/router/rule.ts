@@ -5,6 +5,7 @@ import {
   getRuleData,
   insertRule,
   insertRuleData,
+  syncCollectionUpdatedAt,
   updateRule,
   updateRuleData,
 } from '@/database';
@@ -33,6 +34,7 @@ router.get('/:ruleId', async (ctx) => {
 router.post('/', async (ctx) => {
   try {
     const data = await insertRule(ctx.params.collectionId, ctx.request.body as NewRule);
+    await syncCollectionUpdatedAt(ctx.params.collectionId);
     ctx.body = {
       code: 0,
       msg: '',
@@ -50,6 +52,7 @@ router.post('/', async (ctx) => {
 router.put('/:ruleId', async (ctx) => {
   try {
     const data = await updateRule(Number(ctx.params.ruleId), ctx.request.body as unknown as Rule);
+    await syncCollectionUpdatedAt(ctx.params.collectionId);
     ctx.body = {
       code: 0,
       msg: '',
@@ -67,6 +70,7 @@ router.put('/:ruleId', async (ctx) => {
 router.delete('/:ruleId', async (ctx) => {
   try {
     const data = await deleteRule(Number(ctx.params.ruleId));
+    await syncCollectionUpdatedAt(ctx.params.collectionId);
     ctx.body = {
       code: 0,
       msg: '',
@@ -101,6 +105,7 @@ router.get('/:ruleId/data/:ruleDataId', async (ctx) => {
 router.post('/:ruleId/data', async (ctx) => {
   try {
     const data = await insertRuleData(ctx.request.body as NewRuleData, Number(ctx.params.ruleId));
+    await syncCollectionUpdatedAt(ctx.params.collectionId);
     ctx.body = {
       code: 0,
       msg: '',
@@ -118,6 +123,7 @@ router.post('/:ruleId/data', async (ctx) => {
 router.put('/:ruleId/data/:ruleDataId', async (ctx) => {
   try {
     const data = await updateRuleData(Number(ctx.params.ruleDataId), ctx.request.body as unknown as RuleData);
+    await syncCollectionUpdatedAt(ctx.params.collectionId);
     ctx.body = {
       code: 0,
       msg: '',
@@ -135,6 +141,7 @@ router.put('/:ruleId/data/:ruleDataId', async (ctx) => {
 router.delete('/:ruleId/data/:ruleDataId', async (ctx) => {
   try {
     const data = await deleteRuleData(Number(ctx.params.ruleDataId));
+    await syncCollectionUpdatedAt(ctx.params.collectionId);
     ctx.body = {
       code: 0,
       msg: '',

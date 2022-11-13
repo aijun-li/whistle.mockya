@@ -57,3 +57,14 @@ export async function getCollection(id: string) {
   });
   return data;
 }
+
+export async function syncCollectionUpdatedAt(id: string) {
+  await prisma.collection.update({
+    where: {
+      id,
+    },
+    data: {
+      updatedAt: new Date(),
+    },
+  });
+}

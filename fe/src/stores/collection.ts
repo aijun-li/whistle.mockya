@@ -17,7 +17,9 @@ export const useCollectionStore = defineStore('collection', () => {
 
   async function fetchCollection(id: string) {
     try {
-      loading = true;
+      if (!collection) {
+        loading = true;
+      }
       const data = await getCollection(id);
       collection = data;
     } catch (error) {
