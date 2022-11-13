@@ -11,7 +11,7 @@ export const useCollectionStore = defineStore('collection', () => {
   const httpRules = $computed(() => collection?.rules.filter((rule) => rule.type === RuleType.http) ?? []);
 
   function checkIfRuleExists(pattern: string, type: RuleType) {
-    const rules = (type = RuleType.rpc ? rpcRules : httpRules);
+    const rules = type === RuleType.rpc ? rpcRules : httpRules;
     return rules.some((rule) => rule.pattern === pattern);
   }
 

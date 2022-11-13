@@ -19,7 +19,7 @@
       </ResizeLayout>
     </Transition>
 
-    <CreateRuleModal v-model="createRuleVisible" :type="createRuleType" @refetch="fetchCollection" />
+    <CreateRuleModal v-model="createRuleVisible" :type="createRuleType" @refetch="fetchCollection(id)" />
   </div>
 </template>
 

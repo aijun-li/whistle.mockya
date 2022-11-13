@@ -33,8 +33,8 @@ export function getRule(id: number) {
   });
 }
 
-export function updateRule(rule: Rule) {
-  const { id, type, pattern, enabled, delay, activeId, desc } = rule;
+export function updateRule(id: number, rule: Rule) {
+  const { type, pattern, enabled, delay, activeId, desc } = rule;
 
   return prisma.rule.update({
     where: {
@@ -81,8 +81,16 @@ export function insertRuleData(ruleData: NewRuleData, ruleId?: number) {
   });
 }
 
-export function updateRuleData(ruleData: RuleData) {
-  const { id, label, value } = ruleData;
+export function getRuleData(id: number) {
+  return prisma.ruleData.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+}
+
+export function updateRuleData(id: number, ruleData: RuleData) {
+  const { label, value } = ruleData;
 
   return prisma.ruleData.update({
     where: {
