@@ -12,18 +12,18 @@
       </ButtonGroup>
     </div>
 
-    <div class="flex items-center justify-between mt-4">
-      <Input class="flex-1 mr-8" placeholder="search" />
+    <div class="flex items-center justify-between mt-2">
+      <Input v-model="searchText" class="flex-1 mr-8" placeholder="search" />
 
-      <Dropdown end>
+      <Dropdown trigger="hover" end>
         <template #reference>
           <Button class="w-max" color="primary">Create <Down class="ml-1" /></Button>
         </template>
         <template #default>
           <Menu class="w-max p-2" rounded>
-            <MenuItem>HTTP</MenuItem>
-            <MenuItem>RPC</MenuItem>
-            <MenuItem>RPC (Gen)</MenuItem>
+            <MenuItem @click.stop="emit('create', CreateRuleType.http)">HTTP</MenuItem>
+            <MenuItem @click.stop="emit('create', CreateRuleType.rpc)">RPC</MenuItem>
+            <MenuItem @click.stop="emit('create', CreateRuleType.gen)">RPC (Gen)</MenuItem>
           </Menu>
         </template>
       </Dropdown>
@@ -39,11 +39,18 @@ import Input from '@/components/common/Input.vue';
 import Menu from '@/components/common/Menu.vue';
 import MenuItem from '@/components/common/MenuItem.vue';
 import { useCollectionStore } from '@/stores';
+import { CreateRuleType } from '@/typings';
 import { Down } from '@icon-park/vue-next';
 import { storeToRefs } from 'pinia';
 import { RuleType } from '~/typings';
 
-const selectedType = $ref(RuleType.all);
+const emit = defineEmits<{
+  (e: 'create', type: CreateRuleType): void;
+}>();
 
 const { collection } = $(storeToRefs(useCollectionStore()));
+
+const selectedType = $ref(RuleType.all);
+
+const searchText = $ref('');
 </script>

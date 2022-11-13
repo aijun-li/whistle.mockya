@@ -1,7 +1,13 @@
 <template>
   <div class="form-control relative pb-4 pt-2">
     <div class="flex items-center">
-      <span class="font-semibold">{{ label }}</span>
+      <span class="font-semibold">
+        <template v-if="required">
+          {{ label }}
+          <sup class="text-error">*</sup>
+        </template>
+        <template v-else>{{ label }}</template>
+      </span>
       <Tooltip v-if="tip" class="ml-2" :tip="tip" position="right">
         <Help class="cursor-help" />
       </Tooltip>
@@ -32,12 +38,14 @@ interface Props {
   label: string;
   placeholder?: string;
   tip?: string;
+  required?: boolean;
   validateFunc?: (t: string) => string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   placeholder: '',
   tip: '',
+  required: false,
   validateFunc: () => '',
 });
 const emit = defineEmits(['update:modelValue', 'input']);

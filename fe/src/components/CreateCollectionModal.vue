@@ -8,6 +8,7 @@
           label="ID"
           tip="unique string without space"
           :validate-func="validateId"
+          required
           @keydown.enter="titleInput?.focus()"
         />
         <FormInput
@@ -15,6 +16,7 @@
           v-model="params.title"
           label="Title"
           :validate-func="validateTitle"
+          required
           @keydown.enter="onCreate"
         />
       </div>
@@ -31,7 +33,7 @@ import Button from '@/components/common/Button.vue';
 import Modal from '@/components/common/Modal.vue';
 import { createCollection } from '@/services';
 import { useCollectionsStore } from '@/stores';
-import { toast } from '@/utils';
+import { handleError, toast } from '@/utils';
 import { whenever } from '@vueuse/core';
 import { nextTick, reactive } from 'vue';
 import FormInput from './common/FormInput.vue';
@@ -116,7 +118,7 @@ async function onCreate() {
     emit('update:modelValue', false);
     emit('refetch');
   } catch (error) {
-    console.error(error);
+    handleError(error);
   } finally {
     createLoading = false;
   }

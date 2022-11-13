@@ -20,7 +20,7 @@ export interface RuleData {
 export declare type NewRuleData = Omit<RuleData, 'id'>;
 export interface Rule {
     id: number;
-    type: Omit<RuleType, RuleType.all>;
+    type: Exclude<RuleType, RuleType.all>;
     pattern: string;
     enabled: boolean;
     delay: number;

@@ -1,4 +1,4 @@
-import { BaseCollection, Collection, UpsertCollectionParams } from '~/typings';
+import { BaseCollection, Collection, NewRule, Rule, UpsertCollectionParams } from '~/typings';
 
 const prefix = import.meta.env.DEV ? 'http://localhost:8899/whistle.mockya/api' : '/whistle.mockya/api';
 
@@ -107,4 +107,27 @@ export async function deleteCollection(id: string) {
   }
 
   return data as Collection;
+}
+
+export async function createRule(collectionId: string, rule: NewRule) {
+  const res = await fetch(e(`/collection/${collectionId}/rule`), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(rule),
+  });
+
+  if (!res.ok) {
+    throw new Error('Fetch Error!');
+  }
+
+  const { code, msg, data } = await res.json();
+
+  if (code) {
+    console.error(msg);
+    throw new Error(msg);
+  }
+
+  return data as Rule;
 }

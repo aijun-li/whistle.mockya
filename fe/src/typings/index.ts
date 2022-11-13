@@ -41,3 +41,9 @@ export const enum LocalStorageKey {
   lightTheme = 'light-theme',
   darkTheme = 'dark-theme',
 }
+
+export const enum CreateRuleType {
+  http = 'http',
+  rpc = 'rpc',
+  gen = 'gen',
+}
