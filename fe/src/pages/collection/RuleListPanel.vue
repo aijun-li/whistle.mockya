@@ -28,6 +28,12 @@
         </template>
       </Dropdown>
     </div>
+
+    <ElScrollbar class="flex-1 mt-2">
+      <TransitionGroup name="list">
+        <RuleCard v-for="rule in rules" :key="rule.id" class="my-2" :rule="rule" />
+      </TransitionGroup>
+    </ElScrollbar>
   </div>
 </template>
 
@@ -38,9 +44,11 @@ import Dropdown from '@/components/common/Dropdown.vue';
 import Input from '@/components/common/Input.vue';
 import Menu from '@/components/common/Menu.vue';
 import MenuItem from '@/components/common/MenuItem.vue';
+import RuleCard from '@/components/RuleCard.vue';
 import { useCollectionStore } from '@/stores';
 import { CreateRuleType } from '@/typings';
 import { Down } from '@icon-park/vue-next';
+import { ElScrollbar } from 'element-plus';
 import { storeToRefs } from 'pinia';
 import { RuleType } from '~/typings';
 
@@ -48,9 +56,34 @@ const emit = defineEmits<{
   (e: 'create', type: CreateRuleType): void;
 }>();
 
-const { collection } = $(storeToRefs(useCollectionStore()));
+const store = useCollectionStore();
+const { collection, allRules, rpcRules, httpRules } = $(storeToRefs(store));
 
 const selectedType = $ref(RuleType.all);
+const rules = $computed(() => {
+  switch (selectedType) {
+    case RuleType.all:
+      return allRules;
+    case RuleType.http:
+      return httpRules;
+    case RuleType.rpc:
+      return rpcRules;
+  }
+});
 
 const searchText = $ref('');
 </script>
+
+<style lang="scss" scoped>
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.2s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+</style>

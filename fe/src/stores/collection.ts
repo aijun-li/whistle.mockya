@@ -7,6 +7,7 @@ export const useCollectionStore = defineStore('collection', () => {
   let loading = $ref(true);
   let collection = $ref<Collection | null>(null);
 
+  const allRules = $computed(() => collection?.rules ?? []);
   const rpcRules = $computed(() => collection?.rules.filter((rule) => rule.type === RuleType.rpc) ?? []);
   const httpRules = $computed(() => collection?.rules.filter((rule) => rule.type === RuleType.http) ?? []);
 
@@ -32,6 +33,9 @@ export const useCollectionStore = defineStore('collection', () => {
   return $$({
     loading,
     collection,
+    allRules,
+    httpRules,
+    rpcRules,
     fetchCollection,
     checkIfRuleExists,
   });
