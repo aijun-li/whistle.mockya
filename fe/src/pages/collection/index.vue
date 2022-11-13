@@ -11,7 +11,7 @@
 
       <ResizeLayout v-else local-key="collection-home" start-min="30%" end-min="30%">
         <template #start>
-          <RuleListPanel @create="onCreateRule" />
+          <RuleListPanel @create="onCreateRule" @refetch="fetchCollection(id)" />
         </template>
         <template #end>
           <Editor />

@@ -29,9 +29,9 @@
       </Dropdown>
     </div>
 
-    <ElScrollbar class="flex-1 mt-2">
+    <ElScrollbar class="flex-1 mt-2 -mx-4 px-4" wrap-class="-mx-4 px-4">
       <TransitionGroup name="list">
-        <RuleCard v-for="rule in rules" :key="rule.id" class="my-2" :rule="rule" />
+        <RuleCard v-for="rule in rules" :key="rule.id" class="my-2" :rule="rule" @refetch="emit('refetch')" />
       </TransitionGroup>
     </ElScrollbar>
   </div>
@@ -46,20 +46,22 @@ import Menu from '@/components/common/Menu.vue';
 import MenuItem from '@/components/common/MenuItem.vue';
 import RuleCard from '@/components/RuleCard.vue';
 import { useCollectionStore } from '@/stores';
-import { CreateRuleType } from '@/typings';
+import { CreateRuleType, LocalStorageKey } from '@/typings';
 import { Down } from '@icon-park/vue-next';
+import { useStorage } from '@vueuse/core';
 import { ElScrollbar } from 'element-plus';
 import { storeToRefs } from 'pinia';
 import { RuleType } from '~/typings';
 
 const emit = defineEmits<{
   (e: 'create', type: CreateRuleType): void;
+  (e: 'refetch'): void;
 }>();
 
 const store = useCollectionStore();
 const { collection, allRules, rpcRules, httpRules } = $(storeToRefs(store));
 
-const selectedType = $ref(RuleType.all);
+const selectedType = $(useStorage(LocalStorageKey.rulePanelDefaultType, RuleType.all));
 const rules = $computed(() => {
   switch (selectedType) {
     case RuleType.all:

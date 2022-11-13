@@ -25,7 +25,8 @@ export interface Rule {
     enabled: boolean;
     delay: number;
     activeId: number;
+    collectionId: string;
     data: RuleData[];
     desc?: string;
 }
-export declare type NewRule = Omit<Rule, 'id' | 'activeId' | 'data'>;
+export declare type NewRule = Omit<Rule, 'id' | 'activeId' | 'data' | 'collectionId'>;

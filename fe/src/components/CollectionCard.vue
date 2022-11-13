@@ -55,7 +55,7 @@
 <script lang="ts" setup>
 import { useDoubleConfirm } from '@/hooks';
 import { deleteCollection, updateCollection } from '@/services';
-import { toast } from '@/utils';
+import { handleError, toast } from '@/utils';
 import { More, Time } from '@icon-park/vue-next';
 import copy from 'copy-to-clipboard';
 import dayjs from 'dayjs';
@@ -101,7 +101,7 @@ async function onEditChange() {
 
       emit('refetch');
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   }
   inEdit = false;
@@ -118,7 +118,7 @@ async function onDeleteClick() {
       toast.success('Deleted');
       emit('refetch');
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   }
 }

@@ -1,21 +1,39 @@
 <template>
-  <div class="relative top-0 hover:-top-2px transition-all duration-200">
+  <div class="relative top-0 hover:-top-1 transition-all duration-200">
     <Card
-      class="rule-card !shadow-none transition-all duration-200 hover:border-primary"
+      class="rule-card relative border-base-300 !shadow-none transition-all duration-200 hover:border-primary"
       bordered
       compact
       @mouseenter="hovered = true"
       @mouseleave="hovered = false"
     >
-      <div class="relative">
+      <div>
         <div class="font-semibold">{{ rule.pattern }}</div>
         <div class="text-xs opacity-70">{{ rule.desc || '&nbsp;' }}</div>
 
-        <Transition name="operation">
-          <div v-if="hovered" class="operation-section">
-            <Edit class="operation-icon edit-icon" />
-            <Delete class="operation-icon delete-icon" />
-            <More class="operation-icon more-icon" />
+        <Transition name="operation" :duration="400">
+          <div v-if="hovered" class="absolute right-0 top-0 flex items-center justify-center h-full px-1">
+            <div class="operation-btn edit-btn">
+              <Button square ghost>
+                <Edit />
+              </Button>
+            </div>
+            <div class="operation-btn delete-btn">
+              <Button
+                :class="{ confirmed: deleteConfirmed }"
+                :color="deleteConfirmed ? 'error' : ''"
+                :ghost="!deleteConfirmed"
+                square
+                @click="onDelete"
+              >
+                <Delete />
+              </Button>
+            </div>
+            <div class="operation-btn more-btn">
+              <Button square ghost>
+                <More />
+              </Button>
+            </div>
           </div>
         </Transition>
       </div>
@@ -24,8 +42,12 @@
 </template>
 
 <script lang="ts" setup>
+import { useDoubleConfirm } from '@/hooks';
+import { deleteRule } from '@/services';
+import { handleError, toast } from '@/utils';
 import { Delete, Edit, More } from '@icon-park/vue-next';
 import { Rule } from '~/typings';
+import Button from './common/Button.vue';
 import Card from './common/Card.vue';
 
 interface Props {
@@ -33,38 +55,55 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const emit = defineEmits(['refetch']);
 
 const hovered = $ref(false);
+
+let deleteConfirmed = $(useDoubleConfirm());
+async function onDelete() {
+  if (!deleteConfirmed) {
+    deleteConfirmed = true;
+  } else {
+    try {
+      await deleteRule(props.rule);
+      toast.success('Deleted');
+      emit('refetch');
+    } catch (error) {
+      handleError(error);
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-.operation-section {
-  @apply absolute right-0 top-1/2 transform -translate-y-1/2;
+.operation-btn {
+  .button {
+    @apply hover:bg-base-300;
+  }
 
-  .operation-icon {
-    @apply cursor-pointer;
-
-    &:not(:first-child) {
-      @apply ml-4;
-    }
+  &.delete-btn.confirmed {
+    @apply hover:bg-error;
   }
 }
 
 .operation-enter-active,
 .operation-leave-active {
-  transition: all 0.2s ease;
-
-  .delete-icon {
+  .operation-btn {
+    transition: all 0.2s ease;
+  }
+  .delete-btn {
     transition-delay: 0.1s;
   }
-  .more-icon {
+  .more-btn {
     transition-delay: 0.2s;
   }
 }
 
 .operation-enter-from,
 .operation-leave-to {
-  opacity: 0;
-  transform: translateY(-20px);
+  .operation-btn {
+    opacity: 0;
+    transform: translateY(4px);
+  }
 }
 </style>

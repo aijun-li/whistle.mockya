@@ -40,6 +40,7 @@ export const enum LocalStorageKey {
   themeType = 'theme-type',
   lightTheme = 'light-theme',
   darkTheme = 'dark-theme',
+  rulePanelDefaultType = 'rule-panel-default-type',
 }
 
 export const enum CreateRuleType {
