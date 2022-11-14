@@ -1,18 +1,21 @@
-import { whenever } from '@vueuse/core';
+import { readonly } from 'vue';
 
-export function useDoubleConfirm(delay = 2000) {
-  let confirmed = $ref(false);
+export function useDoubleConfirm(callback: () => void | Promise<void>, delay = 2000) {
+  let preconfirmed = $ref(false);
 
-  let timer: number;
-  whenever(
-    () => confirmed,
-    () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        confirmed = false;
+  function trigger() {
+    if (!preconfirmed) {
+      preconfirmed = true;
+      setTimeout(() => {
+        preconfirmed = false;
       }, delay);
-    },
-  );
+    } else {
+      callback();
+    }
+  }
 
-  return $$(confirmed);
+  return {
+    preconfirmed: readonly($$(preconfirmed)),
+    trigger,
+  };
 }

@@ -24,10 +24,10 @@
               <MenuItem @click.stop="onEditClick">Edit</MenuItem>
               <MenuItem
                 class="text-error"
-                :class="{ 'delete-option__confirmed': deleteConfirmed }"
+                :class="{ 'delete-option__confirmed': deletePreconfirmed }"
                 @click.stop="onDeleteClick"
               >
-                {{ deleteConfirmed ? 'Confirm' : 'Delete' }}
+                Delete
               </MenuItem>
             </Menu>
           </template>
@@ -108,11 +108,8 @@ async function onEditChange() {
   newTitle = '';
 }
 
-let deleteConfirmed = $(useDoubleConfirm());
-async function onDeleteClick() {
-  if (!deleteConfirmed) {
-    deleteConfirmed = true;
-  } else {
+const { preconfirmed: deletePreconfirmed, trigger: onDeleteClick } = $(
+  useDoubleConfirm(async () => {
     try {
       await deleteCollection(props.collection.id);
       toast.success('Deleted');
@@ -120,8 +117,8 @@ async function onDeleteClick() {
     } catch (error) {
       handleError(error);
     }
-  }
-}
+  }),
+);
 </script>
 
 <style lang="scss" scoped>

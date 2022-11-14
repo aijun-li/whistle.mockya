@@ -20,9 +20,9 @@
             </div>
             <div class="operation-btn delete-btn">
               <Button
-                :class="{ confirmed: deleteConfirmed }"
-                :color="deleteConfirmed ? 'error' : ''"
-                :ghost="!deleteConfirmed"
+                :class="{ confirmed: deletePreconfirmed }"
+                :color="deletePreconfirmed ? 'error' : ''"
+                :ghost="!deletePreconfirmed"
                 square
                 @click="onDelete"
               >
@@ -59,11 +59,8 @@ const emit = defineEmits(['refetch']);
 
 const hovered = $ref(false);
 
-let deleteConfirmed = $(useDoubleConfirm());
-async function onDelete() {
-  if (!deleteConfirmed) {
-    deleteConfirmed = true;
-  } else {
+const { preconfirmed: deletePreconfirmed, trigger: onDelete } = $(
+  useDoubleConfirm(async () => {
     try {
       await deleteRule(props.rule);
       toast.success('Deleted');
@@ -71,8 +68,8 @@ async function onDelete() {
     } catch (error) {
       handleError(error);
     }
-  }
-}
+  }),
+);
 </script>
 
 <style lang="scss" scoped>
