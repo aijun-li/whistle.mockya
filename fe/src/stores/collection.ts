@@ -1,5 +1,5 @@
 import { getCollection } from '@/services';
-import { handleError } from '@/utils';
+import { handleError, sortRulesByTimeDescending } from '@/utils';
 import { defineStore } from 'pinia';
 import { Collection, RuleType } from '~/typings';
 
@@ -7,9 +7,13 @@ export const useCollectionStore = defineStore('collection', () => {
   let loading = $ref(true);
   let collection = $ref<Collection | null>(null);
 
-  const allRules = $computed(() => collection?.rules ?? []);
-  const rpcRules = $computed(() => collection?.rules.filter((rule) => rule.type === RuleType.rpc) ?? []);
-  const httpRules = $computed(() => collection?.rules.filter((rule) => rule.type === RuleType.http) ?? []);
+  const allRules = $computed(() => (collection?.rules ?? []).sort(sortRulesByTimeDescending));
+  const rpcRules = $computed(() =>
+    (collection?.rules.filter((rule) => rule.type === RuleType.rpc) ?? []).sort(sortRulesByTimeDescending),
+  );
+  const httpRules = $computed(() =>
+    (collection?.rules.filter((rule) => rule.type === RuleType.http) ?? []).sort(sortRulesByTimeDescending),
+  );
 
   function checkIfRuleExists(pattern: string, type: RuleType) {
     const rules = type === RuleType.rpc ? rpcRules : httpRules;

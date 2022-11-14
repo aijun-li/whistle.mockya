@@ -32,7 +32,9 @@ export interface Rule {
   activeId: number;
   collectionId: string;
   data: RuleData[];
-  desc?: string;
+  desc: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export type NewRule = Omit<Rule, 'id' | 'activeId' | 'data' | 'collectionId'>;

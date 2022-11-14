@@ -1,7 +1,7 @@
 <template>
-  <div class="relative top-0 hover:-top-1 transition-all duration-200">
+  <div class="relative top-0 hover:-top-2px transition-all duration-200">
     <Card
-      class="rule-card relative border-base-300 !shadow-none transition-all duration-200 hover:border-primary"
+      class="rule-card relative border-base-300 !shadow !hover:shadow-lg transition-all duration-200 hover:border-primary"
       bordered
       compact
       @mouseenter="hovered = true"

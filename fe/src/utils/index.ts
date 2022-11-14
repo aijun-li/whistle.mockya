@@ -1,4 +1,5 @@
 import toast from '@/components/common/Toast/toast';
+import { Rule } from '~/typings';
 
 export { toast };
 
@@ -18,4 +19,8 @@ export function hslToHex(h: number, s: number, l: number) {
 export function handleError(error: any) {
   toast.error(error.message);
   console.error(error);
+}
+
+export function sortRulesByTimeDescending(a: Rule, b: Rule) {
+  return a.createdAt < b.createdAt ? 1 : -1;
 }

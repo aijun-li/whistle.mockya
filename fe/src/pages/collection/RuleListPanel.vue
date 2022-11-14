@@ -112,4 +112,8 @@ function onEditRule(rule: Rule) {
   opacity: 0;
   transform: translateX(-30px);
 }
+
+.list-leave-active {
+  position: absolute;
+}
 </style>
