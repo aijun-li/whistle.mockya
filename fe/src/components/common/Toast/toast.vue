@@ -14,7 +14,7 @@
 <script lang="ts" setup>
 import { Color } from '@/typings/component';
 import { Attention, CheckOne, CloseOne, Info } from '@icon-park/vue-next';
-import { onMounted } from 'vue';
+import { CSSProperties, onMounted } from 'vue';
 
 export interface Props {
   id?: number;
@@ -41,10 +41,13 @@ const props = withDefaults(defineProps<Props>(), {
   },
 });
 
-const style = $computed(() => ({
-  top: `${props.offset}px`,
-  zIndex: `${props.zIndex}`,
-}));
+const style = $computed<CSSProperties>(
+  () =>
+    ({
+      top: `${props.offset}px`,
+      zIndex: `${props.zIndex}` as string,
+    } as CSSProperties),
+);
 
 const Icon = $computed(() => {
   switch (props.type) {

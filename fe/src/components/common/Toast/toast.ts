@@ -62,7 +62,7 @@ const toast = (options: ToastOptions | string) => {
 
   props.offset = verticalOffset;
 
-  const vm = createVNode(Toast, props);
+  const vm = createVNode(Toast, props as any);
 
   instances.push(vm);
 

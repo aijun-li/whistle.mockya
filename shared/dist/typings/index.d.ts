@@ -30,4 +30,4 @@ export interface Rule {
     createdAt: string;
     updatedAt: string;
 }
-export declare type NewRule = Omit<Rule, 'id' | 'activeId' | 'data' | 'collectionId'>;
+export declare type NewRule = Omit<Rule, 'id' | 'activeId' | 'data' | 'collectionId' | 'createdAt' | 'updatedAt'>;
