@@ -1,5 +1,11 @@
 # whistle.mockya
 
+## 0.0.1-alpha.10
+
+### Patch Changes
+
+- [fix] migrate db
+
 ## 0.0.1-alpha.9
 
 ### Patch Changes

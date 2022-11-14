@@ -1,6 +1,6 @@
 {
   "name": "whistle.mockya",
-  "version": "0.0.1-alpha.9",
+  "version": "0.0.1-alpha.10",
   "description": "A simple whistle-based mock plugin with ui for http/rpc endpoints",
   "scripts": {
     "postinstall": "npx prisma generate && DATABASE_URL=\"file:./mockya.db\" npx prisma migrate deploy",
