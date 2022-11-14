@@ -1,5 +1,12 @@
 # whistle.mockya
 
+## 0.0.1-alpha.9
+
+### Patch Changes
+
+- [feat] add Rule crud
+- [feat] add settings for theme
+
 ## 0.0.1-alpha.8
 
 ### Patch Changes
