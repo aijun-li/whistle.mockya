@@ -43,8 +43,6 @@
 
 <script lang="ts" setup>
 import { useDoubleConfirm } from '@/hooks';
-import { deleteRule } from '@/services';
-import { handleError, toast } from '@/utils';
 import { Delete, Edit, More } from '@icon-park/vue-next';
 import { Rule } from '~/typings';
 import Button from './common/Button.vue';
@@ -54,20 +52,14 @@ interface Props {
   rule: Rule;
 }
 
-const props = defineProps<Props>();
-const emit = defineEmits(['refetch']);
+defineProps<Props>();
+const emit = defineEmits(['delete']);
 
 const hovered = $ref(false);
 
 const { preconfirmed: deletePreconfirmed, trigger: onDelete } = $(
-  useDoubleConfirm(async () => {
-    try {
-      await deleteRule(props.rule);
-      toast.success('Deleted');
-      emit('refetch');
-    } catch (error) {
-      handleError(error);
-    }
+  useDoubleConfirm(() => {
+    emit('delete');
   }),
 );
 </script>

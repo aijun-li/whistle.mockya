@@ -31,7 +31,7 @@
 
     <ElScrollbar class="flex-1 mt-2 -mx-4 px-4" wrap-class="-mx-4 px-4">
       <TransitionGroup name="list">
-        <RuleCard v-for="rule in rules" :key="rule.id" class="my-2" :rule="rule" @refetch="emit('refetch')" />
+        <RuleCard v-for="rule in rules" :key="rule.id" class="my-2" :rule="rule" @delete="onDeleteRule(rule)" />
       </TransitionGroup>
     </ElScrollbar>
   </div>
@@ -45,13 +45,15 @@ import Input from '@/components/common/Input.vue';
 import Menu from '@/components/common/Menu.vue';
 import MenuItem from '@/components/common/MenuItem.vue';
 import RuleCard from '@/components/RuleCard.vue';
+import { deleteRule } from '@/services';
 import { useCollectionStore } from '@/stores';
 import { CreateRuleType, LocalStorageKey } from '@/typings';
+import { handleError, toast } from '@/utils';
 import { Down } from '@icon-park/vue-next';
 import { useStorage } from '@vueuse/core';
 import { ElScrollbar } from 'element-plus';
 import { storeToRefs } from 'pinia';
-import { RuleType } from '~/typings';
+import { Rule, RuleType } from '~/typings';
 
 const emit = defineEmits<{
   (e: 'create', type: CreateRuleType): void;
@@ -74,6 +76,16 @@ const rules = $computed(() => {
 });
 
 const searchText = $ref('');
+
+async function onDeleteRule(rule: Rule) {
+  try {
+    deleteRule(rule);
+    toast.success('Rule Deleted');
+    emit('refetch');
+  } catch (error) {
+    handleError(error);
+  }
+}
 </script>
 
 <style lang="scss" scoped>
