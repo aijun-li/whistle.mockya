@@ -9,8 +9,7 @@ export interface Collection extends BaseCollection {
 }
 export declare enum RuleType {
     http = "http",
-    rpc = "rpc",
-    all = "all"
+    rpc = "rpc"
 }
 export interface RuleData {
     id: number;
@@ -20,7 +19,7 @@ export interface RuleData {
 export declare type NewRuleData = Omit<RuleData, 'id'>;
 export interface Rule {
     id: number;
-    type: Exclude<RuleType, RuleType.all>;
+    type: RuleType;
     pattern: string;
     enabled: boolean;
     delay: number;

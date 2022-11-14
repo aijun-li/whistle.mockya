@@ -14,7 +14,7 @@
         <Transition name="operation" :duration="400">
           <div v-if="hovered" class="absolute right-0 top-0 flex items-center justify-center h-full px-1">
             <div class="operation-btn edit-btn">
-              <Button square ghost>
+              <Button square ghost @click="emit('edit')">
                 <Edit />
               </Button>
             </div>
@@ -53,7 +53,7 @@ interface Props {
 }
 
 defineProps<Props>();
-const emit = defineEmits(['delete']);
+const emit = defineEmits(['edit', 'delete']);
 
 const hovered = $ref(false);
 

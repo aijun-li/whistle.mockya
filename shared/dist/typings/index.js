@@ -20,5 +20,4 @@ var RuleType;
 (function (RuleType) {
     RuleType["http"] = "http";
     RuleType["rpc"] = "rpc";
-    RuleType["all"] = "all";
 })(RuleType = exports.RuleType || (exports.RuleType = {}));

@@ -132,6 +132,30 @@ export async function createRule(collectionId: string, rule: NewRule) {
   return data as Rule;
 }
 
+export async function updateRule(rule: Rule) {
+  const { id: ruleId, collectionId } = rule;
+  const res = await fetch(e(`/collection/${collectionId}/rule/${ruleId}`), {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(rule),
+  });
+
+  if (!res.ok) {
+    throw new Error('Fetch Error!');
+  }
+
+  const { code, msg, data } = await res.json();
+
+  if (code) {
+    console.error(msg);
+    throw new Error(msg);
+  }
+
+  return data as Rule;
+}
+
 export async function deleteRule(rule: Rule) {
   const { id: ruleId, collectionId } = rule;
   const res = await fetch(e(`/collection/${collectionId}/rule/${ruleId}`), {

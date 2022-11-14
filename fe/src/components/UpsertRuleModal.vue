@@ -1,5 +1,5 @@
 <template>
-  <Modal v-model="visible" :title="`Create ${type.toUpperCase()} Rule`">
+  <Modal v-model="visible" :title="`${isEditMode ? 'Update' : 'Create'} ${type.toUpperCase()} Rule`">
     <template #default>
       <div class="form-control mt-2">
         <FormInput
@@ -10,31 +10,34 @@
           required
           @keydown.enter="descInput?.focus()"
         />
-        <FormInput ref="descInput" v-model="params.desc" label="Description" @keydown.enter="onCreate" />
+        <FormInput ref="descInput" v-model="params.desc" label="Description" @keydown.enter="onUpsert" />
       </div>
     </template>
     <template #action>
       <Button ghost @click="emit('update:modelValue', false)">Cancel</Button>
-      <Button class="ml-2" :loading="createLoading" color="primary" @click="onCreate">Create</Button>
+      <Button class="ml-2" :loading="upsertLoading" color="primary" @click="onUpsert">
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </Button>
     </template>
   </Modal>
 </template>
 
 <script lang="ts" setup>
-import { createRule } from '@/services';
+import { createRule, updateRule } from '@/services';
 import { useCollectionStore } from '@/stores';
 import { handleError, toast } from '@/utils';
 import { whenever } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import { nextTick, reactive } from 'vue';
-import { RuleType } from '~/typings';
+import { Rule, RuleType } from '~/typings';
 import Button from './common/Button.vue';
 import FormInput from './common/FormInput.vue';
 import Modal from './common/Modal.vue';
 
 interface Props {
   modelValue: boolean;
-  type: Exclude<RuleType, RuleType.all>;
+  type: RuleType;
+  rule?: Rule;
 }
 
 const props = defineProps<Props>();
@@ -54,6 +57,7 @@ const visible = $computed({
 });
 
 const patternLabel = $computed(() => (props.type === RuleType.rpc ? 'Service Method' : 'URL Path'));
+const isEditMode = $computed(() => Boolean(props.rule));
 
 const params = reactive({
   pattern: '',
@@ -63,10 +67,17 @@ const params = reactive({
 whenever(
   () => visible,
   async () => {
-    Object.assign(params, {
-      pattern: '',
-      desc: '',
-    });
+    if (isEditMode) {
+      Object.assign(params, {
+        pattern: props.rule!.pattern,
+        desc: props.rule!.desc || '',
+      });
+    } else {
+      Object.assign(params, {
+        pattern: '',
+        desc: '',
+      });
+    }
     patternInput?.resetValidation();
 
     await nextTick();
@@ -80,7 +91,10 @@ function validatePattern(pattern: string) {
   if (pattern === '') {
     return `${patternLabel} cannot be empty`;
   }
-  if (checkIfRuleExists(pattern, props.type)) {
+  if (
+    (!isEditMode || (isEditMode && pattern.trim() !== props.rule!.pattern.trim())) &&
+    checkIfRuleExists(pattern, props.type)
+  ) {
     return 'Pattern already exists';
   }
   return '';
@@ -88,29 +102,39 @@ function validatePattern(pattern: string) {
 
 const descInput = $ref<InstanceType<typeof FormInput> | null>(null);
 
-let createLoading = $ref(false);
-async function onCreate() {
-  if (!patternInput?.validate() || createLoading) {
+let upsertLoading = $ref(false);
+async function onUpsert() {
+  if (!patternInput?.validate() || upsertLoading) {
     return;
   }
 
   try {
-    createLoading = true;
-    await createRule(collection!.id, {
-      type: props.type,
-      pattern: params.pattern.trim(),
-      enabled: true,
-      delay: 0,
-      desc: params.desc.trim(),
-    });
-    toast.success('Created');
+    upsertLoading = true;
+
+    if (isEditMode) {
+      await updateRule({
+        ...props.rule!,
+        pattern: params.pattern.trim(),
+        desc: params.desc.trim(),
+      });
+      toast.success('Rule updated');
+    } else {
+      await createRule(collection!.id, {
+        type: props.type,
+        pattern: params.pattern.trim(),
+        enabled: true,
+        delay: 0,
+        desc: params.desc.trim(),
+      });
+      toast.success('Rule created');
+    }
 
     emit('update:modelValue', false);
     emit('refetch');
   } catch (error) {
     handleError(error);
   } finally {
-    createLoading = false;
+    upsertLoading = false;
   }
 }
 </script>

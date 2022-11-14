@@ -48,3 +48,9 @@ export const enum CreateRuleType {
   rpc = 'rpc',
   gen = 'gen',
 }
+
+export const enum WithAllRuleType {
+  http = 'http',
+  rpc = 'rpc',
+  all = 'all',
+}

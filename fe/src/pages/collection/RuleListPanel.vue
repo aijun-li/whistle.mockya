@@ -6,9 +6,9 @@
         <div class="flex-none font-semibold text-lg ml-2"># {{ collection!.id }}</div>
       </div>
       <ButtonGroup v-model="selectedType">
-        <Button :name="RuleType.http" size="xs" outline>HTTP</Button>
-        <Button :name="RuleType.all" size="xs" outline>All</Button>
-        <Button :name="RuleType.rpc" size="xs" outline>RPC</Button>
+        <Button :name="WithAllRuleType.http" size="xs" outline>HTTP</Button>
+        <Button :name="WithAllRuleType.all" size="xs" outline>All</Button>
+        <Button :name="WithAllRuleType.rpc" size="xs" outline>RPC</Button>
       </ButtonGroup>
     </div>
 
@@ -21,9 +21,9 @@
         </template>
         <template #default>
           <Menu class="w-max p-2" rounded>
-            <MenuItem @click.stop="emit('create', CreateRuleType.http)">HTTP</MenuItem>
-            <MenuItem @click.stop="emit('create', CreateRuleType.rpc)">RPC</MenuItem>
-            <MenuItem @click.stop="emit('create', CreateRuleType.gen)">RPC (Gen)</MenuItem>
+            <MenuItem @click.stop="emit('create-rule', CreateRuleType.http)">HTTP</MenuItem>
+            <MenuItem @click.stop="emit('create-rule', CreateRuleType.rpc)">RPC</MenuItem>
+            <MenuItem @click.stop="emit('create-rule', CreateRuleType.gen)">RPC (Gen)</MenuItem>
           </Menu>
         </template>
       </Dropdown>
@@ -31,7 +31,14 @@
 
     <ElScrollbar class="flex-1 mt-2 -mx-4 px-4" wrap-class="-mx-4 px-4">
       <TransitionGroup name="list">
-        <RuleCard v-for="rule in rules" :key="rule.id" class="my-2" :rule="rule" @delete="onDeleteRule(rule)" />
+        <RuleCard
+          v-for="rule in rules"
+          :key="rule.id"
+          class="my-2"
+          :rule="rule"
+          @edit="onEditRule(rule)"
+          @delete="onDeleteRule(rule)"
+        />
       </TransitionGroup>
     </ElScrollbar>
   </div>
@@ -47,30 +54,31 @@ import MenuItem from '@/components/common/MenuItem.vue';
 import RuleCard from '@/components/RuleCard.vue';
 import { deleteRule } from '@/services';
 import { useCollectionStore } from '@/stores';
-import { CreateRuleType, LocalStorageKey } from '@/typings';
+import { CreateRuleType, LocalStorageKey, WithAllRuleType } from '@/typings';
 import { handleError, toast } from '@/utils';
 import { Down } from '@icon-park/vue-next';
 import { useStorage } from '@vueuse/core';
 import { ElScrollbar } from 'element-plus';
 import { storeToRefs } from 'pinia';
-import { Rule, RuleType } from '~/typings';
+import { Rule } from '~/typings';
 
 const emit = defineEmits<{
-  (e: 'create', type: CreateRuleType): void;
+  (e: 'create-rule', type: CreateRuleType): void;
+  (e: 'update-rule', rule: Rule): void;
   (e: 'refetch'): void;
 }>();
 
 const store = useCollectionStore();
 const { collection, allRules, rpcRules, httpRules } = $(storeToRefs(store));
 
-const selectedType = $(useStorage(LocalStorageKey.rulePanelDefaultType, RuleType.all));
+const selectedType = $(useStorage(LocalStorageKey.rulePanelDefaultType, WithAllRuleType.all));
 const rules = $computed(() => {
   switch (selectedType) {
-    case RuleType.all:
+    case WithAllRuleType.all:
       return allRules;
-    case RuleType.http:
+    case WithAllRuleType.http:
       return httpRules;
-    case RuleType.rpc:
+    case WithAllRuleType.rpc:
       return rpcRules;
   }
 });
@@ -85,6 +93,10 @@ async function onDeleteRule(rule: Rule) {
   } catch (error) {
     handleError(error);
   }
+}
+
+function onEditRule(rule: Rule) {
+  emit('update-rule', rule);
 }
 </script>
 

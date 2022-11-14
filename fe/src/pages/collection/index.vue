@@ -11,7 +11,7 @@
 
       <ResizeLayout v-else local-key="collection-home" start-min="30%" end-min="30%">
         <template #start>
-          <RuleListPanel @create="onCreateRule" @refetch="fetchCollection(id)" />
+          <RuleListPanel @create-rule="onCreateRule" @update-rule="onUpdateRule" @refetch="fetchCollection(id)" />
         </template>
         <template #end>
           <Editor />
@@ -19,7 +19,12 @@
       </ResizeLayout>
     </Transition>
 
-    <CreateRuleModal v-model="createRuleVisible" :type="createRuleType" @refetch="fetchCollection(id)" />
+    <UpsertRuleModal
+      v-model="upsertRuleVisible"
+      :type="upsertRuleType"
+      :rule="updateRule"
+      @refetch="fetchCollection(id)"
+    />
   </div>
 </template>
 
@@ -29,12 +34,13 @@ import Editor from '@/components/common/Editor/Editor.vue';
 import Hero from '@/components/common/Hero.vue';
 import Progress from '@/components/common/Progress.vue';
 import ResizeLayout from '@/components/common/ResizeLayout.vue';
-import CreateRuleModal from '@/components/CreateRuleModal.vue';
+import UpsertRuleModal from '@/components/UpsertRuleModal.vue';
 import { useCollectionStore } from '@/stores';
 import { CreateRuleType } from '@/typings';
 import { Refresh } from '@icon-park/vue-next';
+import { whenever } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
-import { RuleType } from '~/typings';
+import { Rule, RuleType } from '~/typings';
 import RuleListPanel from './RuleListPanel.vue';
 
 interface Props {
@@ -53,18 +59,32 @@ function reloadPage() {
   window.location.reload();
 }
 
-/* ----- Create Rule start ----- */
-let createRuleVisible = $ref(false);
-let createRuleType = $ref<Exclude<RuleType, RuleType.all>>(RuleType.http);
+/* ----- Upsert Rule start ----- */
+let upsertRuleVisible = $ref(false);
+let upsertRuleType = $ref(RuleType.http);
+let updateRule = $ref<Rule | undefined>(undefined);
+
+whenever(
+  () => !upsertRuleVisible,
+  () => {
+    updateRule = undefined;
+  },
+);
 
 function onCreateRule(type: CreateRuleType) {
   if (type === CreateRuleType.http) {
-    createRuleType = RuleType.http;
-    createRuleVisible = true;
+    upsertRuleType = RuleType.http;
+    upsertRuleVisible = true;
   } else if (type === CreateRuleType.rpc) {
-    createRuleType = RuleType.rpc;
-    createRuleVisible = true;
+    upsertRuleType = RuleType.rpc;
+    upsertRuleVisible = true;
   }
 }
-/* ----- Create Rule end ----- */
+
+function onUpdateRule(rule: Rule) {
+  upsertRuleType = rule.type;
+  updateRule = rule;
+  upsertRuleVisible = true;
+}
+/* ----- Upsert Rule end ----- */
 </script>
