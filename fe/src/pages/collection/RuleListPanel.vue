@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full p-4">
+  <div class="flex flex-col h-full p-4 pb-0">
     <div class="flex items-center justify-between">
       <div class="flex items-end mr-4">
         <div class="font-bold text-3xl truncate">{{ collection!.title }}</div>

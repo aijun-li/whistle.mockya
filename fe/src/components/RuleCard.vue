@@ -1,12 +1,6 @@
 <template>
-  <div class="relative top-0 hover:-top-2px transition-all duration-200">
-    <Card
-      class="rule-card relative border-base-300 !shadow !hover:shadow-lg transition-all duration-200 hover:border-primary"
-      bordered
-      compact
-      @mouseenter="hovered = true"
-      @mouseleave="hovered = false"
-    >
+  <div class="rule-card-wrapper transition duration-200" @mouseenter="hovered = true" @mouseleave="hovered = false">
+    <Card class="rule-card relative border-base-300 transition-all duration-200" bordered compact>
       <div>
         <div class="font-semibold">{{ rule.pattern }}</div>
         <div class="text-xs opacity-70">{{ rule.desc || '&nbsp;' }}</div>
@@ -65,7 +59,22 @@ const { preconfirmed: deletePreconfirmed, trigger: onDelete } = $(
 </script>
 
 <style lang="scss" scoped>
+.rule-card-wrapper {
+  &:not(:last-child):hover {
+    @apply -mb-2px;
+  }
+
+  &:hover {
+    @apply transform -translate-y-2px pb-2px;
+
+    .rule-card {
+      @apply shadow-lg border-primary;
+    }
+  }
+}
+
 .rule-card {
+  @apply shadow;
   :deep(.card-body) {
     @apply py-2;
   }
