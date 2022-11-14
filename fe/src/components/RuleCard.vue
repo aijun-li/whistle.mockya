@@ -12,7 +12,7 @@
         <div class="text-xs opacity-70">{{ rule.desc || '&nbsp;' }}</div>
 
         <Transition name="operation" :duration="400">
-          <div v-if="hovered" class="absolute right-0 top-0 flex items-center justify-center h-full px-1">
+          <div v-if="hovered" class="absolute right-0 top-0 flex items-center justify-center h-full px-2">
             <div class="operation-btn edit-btn">
               <Button square ghost @click="emit('edit')">
                 <Edit />
@@ -65,6 +65,12 @@ const { preconfirmed: deletePreconfirmed, trigger: onDelete } = $(
 </script>
 
 <style lang="scss" scoped>
+.rule-card {
+  :deep(.card-body) {
+    @apply py-2;
+  }
+}
+
 .operation-btn {
   .button {
     @apply hover:bg-base-300;

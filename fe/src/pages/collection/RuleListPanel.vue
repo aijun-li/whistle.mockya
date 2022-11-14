@@ -87,7 +87,7 @@ const searchText = $ref('');
 
 async function onDeleteRule(rule: Rule) {
   try {
-    deleteRule(rule);
+    await deleteRule(rule);
     toast.success('Rule Deleted');
     emit('refetch');
   } catch (error) {
