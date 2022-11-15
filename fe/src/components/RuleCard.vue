@@ -1,65 +1,61 @@
 <template>
-  <div class="rule-card-wrapper transition duration-200" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
-    <Card
-      class="rule-card relative border-base-300 transition-all duration-200"
-      :class="{ 'opacity-60': !rule.enabled && !hovered, 'just-on': justTurnedOn, 'just-off': justTurnedOff }"
-      bordered
-      compact
-    >
-      <div class="flex items-center">
-        <Transition>
-          <Badge v-if="!hovered" class="absolute" :color="rule.enabled ? 'success' : ''" size="xs" />
-          <Toggle
-            v-else
-            class="absolute"
-            :model-value="rule.enabled"
-            color="success"
-            @update:model-value="onRuleToggle"
-          />
-        </Transition>
+  <Card
+    class="rule-card relative border-base-300 transition-all duration-200"
+    :class="{ 'opacity-60': false && !rule.enabled && !hovered, 'just-on': justTurnedOn, 'just-off': justTurnedOff }"
+    bordered
+    compact
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
+  >
+    <div class="flex items-center">
+      <Toggle
+        class="rule-toggle absolute"
+        :class="{ 'transition-controlled': !expanded }"
+        :model-value="rule.enabled"
+        color="success"
+        @update:model-value="onRuleToggle"
+      />
 
-        <div class="ml-5" :style="{ transform: `translateX(${titleTranslate.x}px)` }">
-          <div class="font-semibold">{{ rule.pattern }}</div>
-          <div class="text-xs opacity-60">{{ rule.desc || 'No Description' }}</div>
+      <div class="ml-8" :style="{ transform: `translateX(${titleTranslate.x}px)` }">
+        <div class="font-semibold">{{ rule.pattern }}</div>
+        <div class="text-xs opacity-60">{{ rule.desc || 'No Description' }}</div>
+      </div>
+    </div>
+
+    <Transition name="operation" :duration="400">
+      <div v-if="hovered" class="absolute right-0 top-0 flex items-center justify-center h-full px-2">
+        <div class="operation-btn edit-btn">
+          <Button square ghost @click="emit('edit')">
+            <Edit />
+          </Button>
+        </div>
+        <div class="operation-btn stopwatch-btn">
+          <Button square ghost>
+            <StopwatchStart />
+          </Button>
+        </div>
+        <div class="operation-btn delete-btn">
+          <Button
+            :class="{ confirmed: deletePreconfirmed }"
+            :color="deletePreconfirmed ? 'error' : ''"
+            :ghost="!deletePreconfirmed"
+            square
+            @click="onDelete"
+          >
+            <Delete />
+          </Button>
         </div>
       </div>
-
-      <Transition name="operation" :duration="400">
-        <div v-if="hovered" class="absolute right-0 top-0 flex items-center justify-center h-full px-2">
-          <div class="operation-btn edit-btn">
-            <Button square ghost @click="emit('edit')">
-              <Edit />
-            </Button>
-          </div>
-          <div class="operation-btn delete-btn">
-            <Button
-              :class="{ confirmed: deletePreconfirmed }"
-              :color="deletePreconfirmed ? 'error' : ''"
-              :ghost="!deletePreconfirmed"
-              square
-              @click="onDelete"
-            >
-              <Delete />
-            </Button>
-          </div>
-          <div class="operation-btn more-btn">
-            <Button square ghost>
-              <More />
-            </Button>
-          </div>
-        </div>
-      </Transition>
-    </Card>
-  </div>
+    </Transition>
+  </Card>
 </template>
 
 <script lang="ts" setup>
 import { useDoubleConfirm } from '@/hooks';
-import { Delete, Edit, More } from '@icon-park/vue-next';
+import { Delete, Edit, StopwatchStart } from '@icon-park/vue-next';
 import { useSpring } from '@vueuse/motion';
 import { reactive, watch } from 'vue';
 import { Rule } from '~/typings';
-import Badge from './common/Badge.vue';
 import Button from './common/Button.vue';
 import Card from './common/Card.vue';
 import Toggle from './common/Toggle.vue';
@@ -80,7 +76,7 @@ const { preconfirmed: deletePreconfirmed, trigger: onDelete } = $(
 );
 
 const titleTranslate = reactive({ x: 0 });
-const { set: setTitleTranslate } = useSpring(titleTranslate, { stiffness: 210, damping: 20.5 });
+const { set: setTitleTranslate } = useSpring(titleTranslate, { stiffness: 220, damping: 14 });
 
 let justTurnedOn = $ref(false);
 let turnedOnTimer: number;
@@ -107,9 +103,26 @@ watch(
   },
 );
 
+let expanded = $ref(false);
+let expandedTimer: number;
+watch(
+  () => hovered,
+  (val) => {
+    if (val) {
+      clearTimeout(expandedTimer);
+      setTimeout(() => {
+        expanded = true;
+      }, 200);
+    } else {
+      clearTimeout(expandedTimer);
+      expanded = false;
+    }
+  },
+);
+
 function onMouseEnter() {
   hovered = true;
-  setTitleTranslate({ x: 20 });
+  setTitleTranslate({ x: 12 });
 }
 
 function onMouseLeave() {
@@ -117,25 +130,35 @@ function onMouseLeave() {
   setTitleTranslate({ x: 0 });
 }
 
-function onRuleToggle(val: boolean) {
+function onRuleToggle() {
   emit('toggle');
 }
 </script>
 
 <style lang="scss" scoped>
-.rule-card-wrapper:hover {
-  .rule-card {
-    @apply border-primary;
+.rule-card:hover {
+  @apply border-primary;
 
-    &.just-on {
-      @apply border-success;
-      box-shadow: 0 0 4px 1px hsla(var(--su));
-    }
-    &.just-off {
-      @apply border-neutral;
-      box-shadow: 0 0 4px 1px hsla(var(--b3));
-    }
+  &.just-on {
+    @apply border-success;
+    box-shadow: 0 0 4px 1px hsla(var(--su));
   }
+  &.just-off {
+    @apply border-neutral;
+    box-shadow: 0 0 4px 1px hsla(var(--b3));
+  }
+}
+
+.rule-card:not(:hover) {
+  .rule-toggle {
+    @apply w-5;
+    box-shadow: 0 0 0 2px hsl(var(--b1)) inset;
+  }
+}
+
+.rule-toggle.transition-controlled {
+  transition: background, box-shadow var(--animation-input, 0.2s) ease-in-out 0.2s,
+    width var(--animation-input, 0.2s) ease-in-out;
 }
 
 .rule-card {
@@ -158,12 +181,12 @@ function onRuleToggle(val: boolean) {
 .operation-enter-active,
 .operation-leave-active {
   .operation-btn {
-    transition: all 0.2s ease;
+    transition: all 0.2s ease-in-out;
   }
-  .delete-btn {
+  .stopwatch-btn {
     transition-delay: 0.1s;
   }
-  .more-btn {
+  .delete-btn {
     transition-delay: 0.2s;
   }
 }
