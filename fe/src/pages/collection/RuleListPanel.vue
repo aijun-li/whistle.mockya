@@ -38,6 +38,7 @@
           :rule="rule"
           @edit="onEditRule(rule)"
           @delete="onDeleteRule(rule)"
+          @toggle="onToggleRule(rule)"
         />
       </TransitionGroup>
     </ElScrollbar>
@@ -52,7 +53,7 @@ import Input from '@/components/common/Input.vue';
 import Menu from '@/components/common/Menu.vue';
 import MenuItem from '@/components/common/MenuItem.vue';
 import RuleCard from '@/components/RuleCard.vue';
-import { deleteRule } from '@/services';
+import { deleteRule, updateRule } from '@/services';
 import { useCollectionStore } from '@/stores';
 import { CreateRuleType, LocalStorageKey, WithAllRuleType } from '@/typings';
 import { handleError, toast } from '@/utils';
@@ -97,6 +98,19 @@ async function onDeleteRule(rule: Rule) {
 
 function onEditRule(rule: Rule) {
   emit('update-rule', rule);
+}
+
+async function onToggleRule(rule: Rule) {
+  try {
+    await updateRule({
+      ...rule,
+      enabled: !rule.enabled,
+    });
+    toast.success(rule.enabled ? 'Turned Off' : 'Turned On');
+    emit('refetch');
+  } catch (error) {
+    handleError(error);
+  }
 }
 </script>
 
