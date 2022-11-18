@@ -42,8 +42,6 @@
         />
       </TransitionGroup>
     </ElScrollbar>
-
-    <WheelPicker />
   </div>
 </template>
 
@@ -54,7 +52,6 @@ import Dropdown from '@/components/common/Dropdown.vue';
 import Input from '@/components/common/Input.vue';
 import Menu from '@/components/common/Menu.vue';
 import MenuItem from '@/components/common/MenuItem.vue';
-import WheelPicker from '@/components/common/WheelPicker/WheelPicker.vue';
 import RuleCard from '@/components/RuleCard.vue';
 import { deleteRule, updateRule } from '@/services';
 import { useCollectionStore } from '@/stores';

@@ -57,8 +57,10 @@
           </div>
         </div>
 
-        <div class="panel flex items-center justify-center" @click="onDelayConfirm">
-          <DelaySlider :model-value="rule.delay" @update:model-value="emit('delay', $event)" />
+        <div class="panel flex items-center justify-center">
+          <Button ghost square @click="onDelayConfirm"> <Error theme="filled" /> </Button>
+          <!-- <WheelPicker class="flex-1" :model-value="rule.delay" /> -->
+          <Button ghost square @click="onDelayConfirm"> <Correct theme="filled" /> </Button>
         </div>
       </div>
     </div>
@@ -67,7 +69,7 @@
 
 <script lang="ts" setup>
 import { useDoubleConfirm } from '@/hooks';
-import { Delete, Edit, StopwatchStart } from '@icon-park/vue-next';
+import { Correct, Delete, Edit, Error, StopwatchStart } from '@icon-park/vue-next';
 import { useSpring } from '@vueuse/motion';
 import { reactive, watch } from 'vue';
 import { Rule } from '~/typings';
@@ -75,7 +77,6 @@ import Badge from './common/Badge.vue';
 import Button from './common/Button.vue';
 import Card from './common/Card.vue';
 import Toggle from './common/Toggle.vue';
-import DelaySlider from './DelaySlider.vue';
 
 interface Props {
   rule: Rule;
