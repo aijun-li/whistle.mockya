@@ -1,7 +1,7 @@
 <template>
   <div class="flex w-screen h-screen">
     <Sidebar class="flex-none" />
-    <div class="flex-1">
+    <div class="flex-1 min-w-0">
       <RouterView></RouterView>
     </div>
   </div>

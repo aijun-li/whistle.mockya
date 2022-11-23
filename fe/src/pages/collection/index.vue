@@ -9,7 +9,7 @@
         <Button color="primary" size="md" @click="reloadPage"><Refresh class="mr-2" />Refresh </Button>
       </Hero>
 
-      <ResizeLayout v-else local-key="collection-home" start-min="30%" end-min="30%">
+      <ResizeLayout v-else local-key="collection-home" start-min="350px">
         <template #start>
           <RuleListPanel @create-rule="onCreateRule" @update-rule="onUpdateRule" @refetch="fetchCollection(id)" />
         </template>

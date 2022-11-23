@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col h-full p-4 pb-0">
     <div class="flex items-center justify-between">
-      <div class="flex items-end mr-4">
+      <div class="flex items-end mr-4 min-w-0">
         <div class="font-bold text-3xl truncate">{{ collection!.title }}</div>
         <div class="flex-none font-semibold text-lg ml-2"># {{ collection!.id }}</div>
       </div>
