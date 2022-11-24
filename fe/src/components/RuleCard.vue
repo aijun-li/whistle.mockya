@@ -59,7 +59,7 @@
 
         <div class="panel flex items-center justify-center">
           <Button ghost square @click="onDelayConfirm"> <Error theme="filled" /> </Button>
-          <!-- <WheelPicker class="flex-1" :model-value="rule.delay" /> -->
+          <WheelPicker class="flex-1" :model-value="rule.delay" />
           <Button ghost square @click="onDelayConfirm"> <Correct theme="filled" /> </Button>
         </div>
       </div>
@@ -77,6 +77,7 @@ import Badge from './common/Badge.vue';
 import Button from './common/Button.vue';
 import Card from './common/Card.vue';
 import Toggle from './common/Toggle.vue';
+import WheelPicker from './common/WheelPicker.vue';
 
 interface Props {
   rule: Rule;
